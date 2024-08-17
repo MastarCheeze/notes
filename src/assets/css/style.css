@@ -1,0 +1,140 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    line-height: 1.5em;
+}
+
+html {
+    color: #222222;
+    margin: 0 0 4rem 0;
+}
+
+body {
+    background-color: #fffbeb;
+    padding: 0 20vw;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+nav#breadcrumb {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    padding: 1rem 0;
+    margin: 0 0 1rem 0;
+}
+
+nav#breadcrumb ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav#breadcrumb li:not(:last-child)::after {
+    display: inline-block;
+    margin: 0 0.35rem;
+    content: ">";
+}
+
+nav#breadcrumb li a {
+    text-decoration: none;
+}
+
+main#dir-tree a {
+    font-family: Helvetica, Arial, sans-serif;
+    text-decoration: none;
+}
+
+main#dir-tree ul {
+    margin: 0 0 0 1.5rem;
+}
+
+main#dir-tree .file {
+    list-style-type: "📄 ";
+}
+
+main#dir-tree .folder {
+    list-style-type: "📂 ";
+}
+
+h1,
+h2 {
+    margin: 1.6rem 0 0 0;
+}
+
+h3 {
+    margin: 0.3rem 0 0 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+main#content > p {
+    margin: 0.6rem 0;
+}
+
+a {
+    color: #ea580c;
+}
+
+a:hover {
+    color: #fb923c;
+}
+
+ul,
+ol {
+    margin: 0.6rem 0 0.6rem 1.5rem;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+}
+
+table {
+    margin: 0.8rem auto;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+th {
+    font-weight: normal;
+    padding: 0.2em 2em;
+}
+
+td {
+    border-style: none solid;
+    padding: 0.2em 0.5em;
+}
+
+img {
+    padding: 0.3rem 1.6rem;
+    max-width: 100%;
+}
+
+p:has(> img) {
+    text-align: center;
+}
+
+pre {
+    margin: 0.4rem 0 0.8rem 0;
+    padding: 0.2rem 0.6rem;
+    background-color: hsl(48, 24%, 86%);
+    border-radius: 4px;
+}
+
+blockquote {
+    border-left: 6px solid hsl(38, 24%, 75%);
+    background-color: hsl(48, 50%, 92%);
+    margin: 0.4rem 0.8rem 0.8rem 0.8rem;
+    padding: 0.2rem 0.2rem 0.2rem 0.8rem;
+    border-radius: 0 4px 4px 0;
+    border-start-start-radius: 0px;
+}

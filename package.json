@@ -1,0 +1,25 @@
+{
+  "name": "a-levels",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parse.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "^14.0.0",
+    "marked-highlight": "^2.1.4",
+    "marked-katex-extension": "^5.1.1",
+    "node-html-parser": "^6.1.13",
+    "parse-md": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.3.0",
+    "typescript": "^5.5.4"
+  },
+  "private": true
+}
