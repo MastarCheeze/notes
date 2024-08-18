@@ -3,21 +3,50 @@ import path from "node:path";
 
 import { parse } from "./parse.js";
 import { compile } from "./compile.js";
+import type { Metadata } from "./parse.js";
 import type { CompileConfig, DirTree } from "./compile.js";
 
 async function main() {
-    const breadcrumb: CompileConfig["breadcrumb"] = [];
+    const breadcrumb: CompileConfig["breadcrumb"] = []; // current location in the filesystem
 
-    async function recursiveCompile(dir: string) {
-        const dirTree: DirTree = [];
+    async function recursiveCompile(dirSrc: string) {
+        const dirTree: DirTree = []; // subtree of child files and folders
 
-        const dirOut = dir.replace(SRC_DIR, OUT_DIR);
+        // create directory
+        const dirOut = dirSrc.replace(SRC_DIR, OUT_DIR);
         const dirRel = path.relative(OUT_DIR, dirOut);
+        const dirName = path.basename(dirOut);
         await fs.mkdir(dirOut);
 
-        breadcrumb.push([path.basename(dirOut), dirRel]);
+        // check if index.md exists
+        let hasIndexFile = true;
+        let compileIndexFileInstruction;
+        try {
+            await fs.stat(path.join(dirSrc, "index.md"));
+        } catch {
+            hasIndexFile = false;
+        }
+        if (hasIndexFile) {
+            const src = path.join(dirSrc, "index.md");
+            const out = path.join(dirOut, "index.html");
+            const markdown = await fs.readFile(src, { encoding: "utf-8" });
+            const { parsed, metadata } = parse(markdown);
+            compileIndexFileInstruction = compileIndexFile.bind(
+                null,
+                parsed,
+                metadata,
+                out,
+                dirName,
+                breadcrumb,
+                dirTree,
+            );
+            breadcrumb.push([metadata.title ?? dirName, dirRel]);
+        } else {
+            breadcrumb.push([dirName, null]);
+        }
 
-        const entries = await fs.readdir(dir, { withFileTypes: true });
+        // loop through all files in directory
+        const entries = await fs.readdir(dirSrc, { withFileTypes: true });
         for (const entry of entries) {
             const src = path.join(entry.parentPath, entry.name);
 
@@ -25,11 +54,16 @@ async function main() {
                 const subDirTree = await recursiveCompile(src);
                 if (subDirTree !== undefined)
                     dirTree.push(subDirTree);
+            } else if (entry.name === "index.md") {
+                ; // skip index.md to compile later
             } else if (entry.name.endsWith(".md")) {
                 const out = src.replace(SRC_DIR, OUT_DIR).replace(".md", ".html");
                 const rel = path.relative(OUT_DIR, out);
 
-                const title = await compileMarkdownFile(src, out, breadcrumb);
+                const markdown = await fs.readFile(src, { encoding: "utf-8" });
+                const { parsed, metadata } = parse(markdown);
+
+                const title = await compileMarkdownFile(parsed, metadata, out, breadcrumb);
 
                 dirTree.push([title, rel]);
             } else {
@@ -41,23 +75,26 @@ async function main() {
         breadcrumb.pop();
 
         if (dirTree.length > 0) {
-            await compileIndexFile(dirOut, breadcrumb, dirTree);
-            return [path.basename(dirOut), dirRel, dirTree] as [string, string, DirTree];
+            if (hasIndexFile) {
+                await compileIndexFileInstruction!();
+            }
+            return [dirName, (hasIndexFile) ? dirRel : null, dirTree] as [string, string, DirTree]; // join subtree with parent tree
         }
     }
 
     await recursiveCompile(SRC_DIR);
 }
 
-async function compileMarkdownFile(src: string, out: string, breadcrumb: CompileConfig["breadcrumb"]) {
-    // read
-    const markdown = await fs.readFile(src, { encoding: "utf-8" });
-
-    // parse and compile
-    const { parsed, metadata } = parse(markdown);
+async function compileMarkdownFile(
+    parsed: string,
+    metadata: Metadata,
+    out: string,
+    breadcrumb: CompileConfig["breadcrumb"],
+) {
+    // compile
     const options: { [key: string]: any } = {};
     options.title = metadata.title ?? path.basename(out);
-    options.breadcrumb = [...breadcrumb, [options.title, null]];
+    options.breadcrumb = [...breadcrumb, ["📄 " + options.title, null]];
     options.baseUrl = BASE_URL;
     const doc = compile(parsed, "page", options as CompileConfig);
 
@@ -68,20 +105,22 @@ async function compileMarkdownFile(src: string, out: string, breadcrumb: Compile
 }
 
 async function compileIndexFile(
-    dirOut: string,
+    parsed: string,
+    metadata: Metadata,
+    out: string,
+    dirName: string,
     breadcrumb: CompileConfig["breadcrumb"],
     dirTree: DirTree,
 ) {
-    // compile
     const options: { [key: string]: any } = {};
-    options.title = path.basename(dirOut);
+    options.title = metadata.title ?? dirName;
     options.breadcrumb = [...breadcrumb, [options.title, null]];
     options.baseUrl = BASE_URL;
     options.dirTree = dirTree;
-    const doc = compile("", "index", options as CompileConfig);
+    const doc = compile(parsed, "index", options as CompileConfig);
 
     // write
-    await fs.writeFile(path.join(dirOut, "index.html"), doc);
+    await fs.writeFile(out, doc);
 }
 
 function parseArgvAfterFlag(flag: string) {
@@ -109,4 +148,3 @@ await main();
 // TODO sort files by alphabetical order, folders always on top
 // TODO order metadata for ordering files/folders within toc pages
 // TODO make the first h1 the title if does not have title metadata
-// TODO make expandable/collapsible file structure

@@ -40,8 +40,11 @@ nav#breadcrumb li a {
     text-decoration: none;
 }
 
-div#dir-tree a {
+div#dir-tree {
     font-family: Helvetica, Arial, sans-serif;
+}
+
+div#dir-tree a {
     text-decoration: none;
 }
 
@@ -49,6 +52,9 @@ div#dir-tree ul {
     margin: 0 0 0 1.5rem;
     font-size: large;
     list-style-type: none;
+}
+
+div#dir-tree .folderButton {
     cursor: pointer;
     user-select: none;
 }
@@ -71,7 +77,7 @@ h6 {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-main#content > p {
+main#content>p {
     margin: 0.6rem 0;
 }
 

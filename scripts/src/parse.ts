@@ -2,7 +2,7 @@ import { marked } from "marked";
 import katex from "marked-katex-extension";
 import parseMeta from "parse-md";
 
-type Metadata = { [key: string]: string };
+export type Metadata = { [key: string]: string };
 
 marked.use({ breaks: true });
 marked.use(katex());

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 
 export type PageType = "page" | "index";
-export type DirTree = ([label: string, link: string] | [label: string, link: string, DirTree])[];
+export type DirTree = ([label: string, link: string] | [label: string, link: string | null, DirTree])[];
 export interface CompileConfig {
     type: PageType;
     title: string;
@@ -60,8 +60,12 @@ function createDirTree(dirTree: CompileConfig["dirTree"]) {
             if (subtree === undefined)
                 html += `<li><a href="${link}">📄 ${label}</a></li>`;
             else {
-                // html += `<li><details><summary><a href="${link}">${label}</a></summary>${recursiveCreate(subtree)}</details></li>`;
-                html += `<li><a class="folderButton">📁 </a><a href="${link}">${label}</a>${recursiveCreate(subtree)}</li>`;
+                html += `<li><a class="folderButton">📁 </a>`;
+                if (link !== null)
+                    html += `<a href="${link}">${label}</a>`;
+                else
+                    html += `<span>${label}</span>`;
+                html += `${recursiveCreate(subtree)}</li>`;
             }
         }
         html += "</ul>";
