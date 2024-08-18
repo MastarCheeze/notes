@@ -59,7 +59,7 @@ async function compileMarkdownFile(src: string, out: string, breadcrumb: Compile
     options.title = metadata.title ?? path.basename(out);
     options.breadcrumb = [...breadcrumb, [options.title, null]];
     options.baseUrl = BASE_URL;
-    const doc = compile(parsed, options as CompileConfig);
+    const doc = compile(parsed, "page", options as CompileConfig);
 
     // write
     await fs.writeFile(out, doc);
@@ -78,7 +78,7 @@ async function compileIndexFile(
     options.breadcrumb = [...breadcrumb, [options.title, null]];
     options.baseUrl = BASE_URL;
     options.dirTree = dirTree;
-    const doc = compile("", options as CompileConfig);
+    const doc = compile("", "index", options as CompileConfig);
 
     // write
     await fs.writeFile(path.join(dirOut, "index.html"), doc);
@@ -104,3 +104,9 @@ const OUT_DIR = parseArgvAfterFlag("-o")[0];
 const BASE_URL = parseArgvAfterFlag("--base-url")[0];
 
 await main();
+
+// TODO index.md files for custom folder titles
+// TODO sort files by alphabetical order, folders always on top
+// TODO order metadata for ordering files/folders within toc pages
+// TODO make the first h1 the title if does not have title metadata
+// TODO make expandable/collapsible file structure

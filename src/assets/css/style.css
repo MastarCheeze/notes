@@ -40,21 +40,17 @@ nav#breadcrumb li a {
     text-decoration: none;
 }
 
-main#dir-tree a {
+div#dir-tree a {
     font-family: Helvetica, Arial, sans-serif;
     text-decoration: none;
 }
 
-main#dir-tree ul {
+div#dir-tree ul {
     margin: 0 0 0 1.5rem;
-}
-
-main#dir-tree .file {
-    list-style-type: "📄 ";
-}
-
-main#dir-tree .folder {
-    list-style-type: "📂 ";
+    font-size: large;
+    list-style-type: none;
+    cursor: pointer;
+    user-select: none;
 }
 
 h1,
