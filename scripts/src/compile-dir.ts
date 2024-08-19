@@ -15,12 +15,12 @@ async function main() {
         // create directory
         const dirOut = dirSrc.replace(SRC_DIR, OUT_DIR);
         const dirRel = path.relative(OUT_DIR, dirOut);
-        const dirName = path.basename(dirOut);
+        let dirName = path.basename(dirOut);
         await fs.mkdir(dirOut);
 
         // check if index.md exists
         let hasIndexFile = true;
-        let compileIndexFileInstruction;
+        let compileIndexFileFunc;
         try {
             await fs.stat(path.join(dirSrc, "index.md"));
         } catch {
@@ -29,21 +29,32 @@ async function main() {
         if (hasIndexFile) {
             const src = path.join(dirSrc, "index.md");
             const out = path.join(dirOut, "index.html");
+
             const markdown = await fs.readFile(src, { encoding: "utf-8" });
             const { parsed, metadata } = parse(markdown);
-            compileIndexFileInstruction = compileIndexFile.bind(
-                null,
-                parsed,
-                metadata,
-                out,
-                {
-                    dirName,
-                    dirRel,
-                    breadcrumb,
-                    dirTree,
-                }
-            );
-            breadcrumb.push([metadata.title ?? dirName, dirRel]);
+
+            if (parsed.length !== 0) {
+                compileIndexFileFunc = compileIndexFile.bind(
+                    null,
+                    parsed,
+                    metadata,
+                    out,
+                    {
+                        dirName,
+                        dirRel,
+                        breadcrumb,
+                        dirTree,
+                    }
+                );
+
+                breadcrumb.push([metadata.title ?? dirName, dirRel]);
+                dirName = metadata.title ?? dirName;
+            } else {
+                breadcrumb.push([metadata.title ?? dirName, null]);
+                dirName = metadata.title ?? dirName;
+                hasIndexFile = false
+            }
+
         } else {
             breadcrumb.push([dirName, null]);
         }
@@ -79,34 +90,13 @@ async function main() {
 
         if (dirTree.length > 0) {
             if (hasIndexFile) {
-                await compileIndexFileInstruction!();
+                await compileIndexFileFunc!();
             }
             return [dirName, (hasIndexFile) ? dirRel : null, dirTree] as [string, string, DirTree]; // join subtree with parent tree
         }
     }
 
     await recursiveCompile(SRC_DIR);
-}
-
-async function compileMarkdownFile(
-    parsed: string,
-    metadata: Metadata,
-    out: string,
-    config: {
-        breadcrumb: CompileConfig["breadcrumb"],
-    },
-) {
-    // compile
-    const options: { [key: string]: any } = {};
-    options.title = metadata.title ?? path.basename(out);
-    options.breadcrumb = [...config.breadcrumb, ["📄 " + options.title, null]];
-    options.baseUrl = BASE_URL;
-    const doc = compile(parsed, "page", options as CompileConfig);
-
-    // write
-    await fs.writeFile(out, doc);
-
-    return options.title;
 }
 
 async function compileIndexFile(
@@ -120,15 +110,42 @@ async function compileIndexFile(
         dirTree: DirTree,
     }
 ) {
-    const options: { [key: string]: any } = {};
+    const options: Record<string, any> = {};
     options.title = metadata.title ?? config.dirName;
     options.breadcrumb = [...config.breadcrumb, [options.title, config.dirRel]];
     options.baseUrl = BASE_URL;
-    options.dirTree = config.dirTree;
-    const doc = compile(parsed, "index", options as CompileConfig);
+
+    let doc;
+    if (metadata.dirTree) {
+        options.dirTree = config.dirTree;
+        doc = compile(parsed, "index", options as CompileConfig);
+    } else {
+        doc = compile(parsed, "page", options as CompileConfig);  // compile as normal page if directory tree not needed
+    }
 
     // write
     await fs.writeFile(out, doc);
+}
+
+async function compileMarkdownFile(
+    parsed: string,
+    metadata: Metadata,
+    out: string,
+    config: {
+        breadcrumb: CompileConfig["breadcrumb"],
+    },
+) {
+    // compile
+    const options: Record<string, any> = {};
+    options.title = metadata.title ?? path.basename(out);
+    options.breadcrumb = [...config.breadcrumb, ["📄 " + options.title, null]];
+    options.baseUrl = BASE_URL;
+    const doc = compile(parsed, "page", options as CompileConfig);
+
+    // write
+    await fs.writeFile(out, doc);
+
+    return options.title;
 }
 
 function parseArgvAfterFlag(flag: string) {
@@ -146,13 +163,11 @@ function parseArgvAfterFlag(flag: string) {
 }
 
 // parse cli args
-const SRC_DIR = process.argv[2];
-const OUT_DIR = parseArgvAfterFlag("-o")[0];
-const BASE_URL = parseArgvAfterFlag("--base-url")[0];
+const SRC_DIR = process.argv[2]!;
+const OUT_DIR = parseArgvAfterFlag("-o")[0]!;
+const BASE_URL = parseArgvAfterFlag("--base-url")[0]!;
 
 await main();
 
-// TODO always make directories in the breadcrumbs clickable
 // TODO sort files by alphabetical order, folders always on top
 // TODO order metadata for ordering files/folders within toc pages
-// TODO make the first h1 the title if does not have title metadata

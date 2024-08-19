@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
+import type { PageType } from "./parse.js";
 
-export type PageType = "page" | "index";
 export type DirTree = ([label: string, link: string] | [label: string, link: string | null, DirTree])[];
 export interface CompileConfig {
     type: PageType;
