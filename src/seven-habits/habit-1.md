@@ -17,6 +17,12 @@ title: "Habit 1: Be Proactive"
 Taking initiative: recognising responsibility to make things happen
 Responsibility: ability to respond
 
+### Stimuli
+
+> Between stimulus and response is the freedom to choose
+
+Nobody can hurt you unless you choose to let them to
+
 ## Circle of concern / circle of influence
 
 Circle of concern
