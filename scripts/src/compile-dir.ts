@@ -96,8 +96,6 @@ async function main() {
 
             // write
             await fs.writeFile(indexOut, doc);
-
-            dirTree.push([currDirTitle, currDirLink]);
         }
         breadcrumb.pop();
 
