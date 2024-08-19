@@ -1,11 +1,11 @@
 import fs from "node:fs/promises";
 import type { PageType } from "./parse.js";
 
-export type DirTree = ([label: string, link: string] | [label: string, link: string | null, DirTree])[];
-export interface CompileConfig {
-    type: PageType;
+export type Breadcrumb = [label: string, link: string | null][];
+export type DirTree = ([label: string, link: string] | [label: string, link: string | null, subtree: DirTree])[];
+export type CompileConfig = {
     title: string;
-    breadcrumb: [label: string, link: string | null][];
+    breadcrumb: Breadcrumb;
     baseUrl: string;
     dirTree?: DirTree;
 }
