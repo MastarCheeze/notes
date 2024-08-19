@@ -36,9 +36,12 @@ async function main() {
                 parsed,
                 metadata,
                 out,
-                dirName,
-                breadcrumb,
-                dirTree,
+                {
+                    dirName,
+                    dirRel,
+                    breadcrumb,
+                    dirTree,
+                }
             );
             breadcrumb.push([metadata.title ?? dirName, dirRel]);
         } else {
@@ -63,7 +66,7 @@ async function main() {
                 const markdown = await fs.readFile(src, { encoding: "utf-8" });
                 const { parsed, metadata } = parse(markdown);
 
-                const title = await compileMarkdownFile(parsed, metadata, out, breadcrumb);
+                const title = await compileMarkdownFile(parsed, metadata, out, { breadcrumb });
 
                 dirTree.push([title, rel]);
             } else {
@@ -89,12 +92,14 @@ async function compileMarkdownFile(
     parsed: string,
     metadata: Metadata,
     out: string,
-    breadcrumb: CompileConfig["breadcrumb"],
+    config: {
+        breadcrumb: CompileConfig["breadcrumb"],
+    },
 ) {
     // compile
     const options: { [key: string]: any } = {};
     options.title = metadata.title ?? path.basename(out);
-    options.breadcrumb = [...breadcrumb, ["📄 " + options.title, null]];
+    options.breadcrumb = [...config.breadcrumb, ["📄 " + options.title, null]];
     options.baseUrl = BASE_URL;
     const doc = compile(parsed, "page", options as CompileConfig);
 
@@ -108,15 +113,18 @@ async function compileIndexFile(
     parsed: string,
     metadata: Metadata,
     out: string,
-    dirName: string,
-    breadcrumb: CompileConfig["breadcrumb"],
-    dirTree: DirTree,
+    config: {
+        dirName: string,
+        dirRel: string,
+        breadcrumb: CompileConfig["breadcrumb"],
+        dirTree: DirTree,
+    }
 ) {
     const options: { [key: string]: any } = {};
-    options.title = metadata.title ?? dirName;
-    options.breadcrumb = [...breadcrumb, [options.title, null]];
+    options.title = metadata.title ?? config.dirName;
+    options.breadcrumb = [...config.breadcrumb, [options.title, config.dirRel]];
     options.baseUrl = BASE_URL;
-    options.dirTree = dirTree;
+    options.dirTree = config.dirTree;
     const doc = compile(parsed, "index", options as CompileConfig);
 
     // write
@@ -144,7 +152,7 @@ const BASE_URL = parseArgvAfterFlag("--base-url")[0];
 
 await main();
 
-// TODO index.md files for custom folder titles
+// TODO always make directories in the breadcrumbs clickable
 // TODO sort files by alphabetical order, folders always on top
 // TODO order metadata for ordering files/folders within toc pages
 // TODO make the first h1 the title if does not have title metadata
