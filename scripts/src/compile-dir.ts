@@ -9,8 +9,9 @@ import type { CompileConfig, Breadcrumb, DirTree } from "./compile.js";
 async function main() {
     const breadcrumb: Breadcrumb = []; // current location in the filesystem
 
-    async function recursiveCompile(currDirSrc: string) {
+    async function recursiveCompile(currDirSrc: string): Promise<DirTree[0] | undefined> {
         const dirTree: DirTree = []; // subtree of child files and folders
+        // const unorderedDirTree: [order: number | null, DirTree[0]][] = [];
 
         // create directory
         const currDirOut = currDirSrc.replace(SRC_DIR, OUT_DIR);
@@ -72,7 +73,11 @@ async function main() {
                 await fs.writeFile(out, doc);
 
                 const link = path.relative(OUT_DIR, out);
-                dirTree.push([title, link]);
+                dirTree.push({
+                    order: metadata.order ?? null,
+                    label: title,
+                    link: link,
+                });
 
             } else {  // copy all other file types as is
                 const out = src.replace(SRC_DIR, OUT_DIR);
@@ -101,12 +106,13 @@ async function main() {
 
         // join subtree with parent tree, only if folder has one or more compiled files
         if (dirTree.length > 0) {
-            return [
-                currDirTitle,
+            return {
+                order: indexMetadata?.order ?? null,
+                label: currDirTitle,
                 // link to index.html only if render dir tree is enabled
-                indexMetadata?.dirTree ? currDirLink : null,
-                dirTree,
-            ] as [string, string, DirTree];
+                link: indexMetadata?.dirTree ? currDirLink : null,
+                subtree: dirTree,
+            };
         }
     }
 

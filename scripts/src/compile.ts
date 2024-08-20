@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import type { PageType } from "./parse.js";
 
 export type Breadcrumb = [label: string, link: string | null][];
-export type DirTree = ([label: string, link: string] | [label: string, link: string | null, subtree: DirTree])[];
+export type DirTree = { order: number | null, label: string, link: string | null, subtree?: DirTree }[];
 export type CompileConfig = {
     title: string;
     breadcrumb: Breadcrumb;
@@ -61,17 +61,32 @@ function createDirTree(dirTree: CompileConfig["dirTree"]) {
         return "";
 
     function recursiveCreate(dirTree: DirTree) {
+        dirTree.sort((a, b) => {
+            // sort by explicit order first
+            const orderScore = (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY);
+            if (!Number.isNaN(orderScore) && orderScore !== 0)
+                return orderScore;
+
+            // sort by folder/file
+            const folderScore = (a.subtree ? 0 : 1) - (b.subtree ? 0 : 1);
+            if (!Number.isNaN(folderScore) && folderScore !== 0)
+                return folderScore;
+
+            // sort alphabetically
+            return a.label.localeCompare(b.label);
+        })
+
         let html = `<ul style="display: none;">`;
-        for (const [label, link, subtree] of dirTree) {
-            if (subtree === undefined)
-                html += `<li><a href="${link}">📄 ${label}</a></li>`;
+        for (const entry of dirTree) {
+            if (entry.subtree === undefined)
+                html += `<li><a href="${entry.link}">📄 ${entry.label}</a></li>`;
             else {
                 html += `<li><a class="folderButton">📁 </a>`;
-                if (link !== null)
-                    html += `<a href="${link}">${label}</a>`;
+                if (entry.link !== null)
+                    html += `<a href="${entry.link}">${entry.label}</a>`;
                 else
-                    html += `<span>${label}</span>`;
-                html += `${recursiveCreate(subtree)}</li>`;
+                    html += `<span>${entry.label}</span>`;
+                html += `${recursiveCreate(entry.subtree)}</li>`;
             }
         }
         html += "</ul>";
