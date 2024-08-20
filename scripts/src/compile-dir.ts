@@ -15,7 +15,6 @@ async function main() {
 
     async function recursiveCompile(currDirSrc: string): Promise<DirTree[0] | undefined> {
         const dirTree: DirTree = []; // subtree of child files and folders
-        // const unorderedDirTree: [order: number | null, DirTree[0]][] = [];
 
         // create directory
         const currDirOut = currDirSrc.replace(SRC_DIR, OUT_DIR);
