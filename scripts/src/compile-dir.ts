@@ -88,7 +88,7 @@ async function main() {
                 // write
                 await fs.writeFile(out, doc);
                 if (VERBOSE)
-                    console.debug(`Successfully compiled ${src}`);
+                    console.debug(`Compiled ${src}`);
                 ++stats.compiled;
 
                 const link = path.relative(OUT_DIR, out);
@@ -121,7 +121,7 @@ async function main() {
             // write
             await fs.writeFile(indexOut, doc);
             if (VERBOSE)
-                console.debug(`Successfully compiled ${indexSrc}`);
+                console.debug(`Compiled ${indexSrc}`);
             ++stats.compiled;
         }
         breadcrumb.pop();
