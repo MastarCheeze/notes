@@ -10,8 +10,9 @@ export type Metadata = {
     dirTree: boolean;
 };
 
-marked.use({ breaks: true });
-marked.use(katex());
+marked
+    .use({ breaks: true })
+    .use(katex())
 
 export function parse(markdown: string): { parsed: string, metadata: Metadata } {
     /**
