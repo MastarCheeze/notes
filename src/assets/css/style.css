@@ -13,7 +13,7 @@ html {
 body {
     background-color: #fffbeb;
     padding: 0 20vw;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 nav#breadcrumb {
@@ -74,7 +74,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 main#content>p {
