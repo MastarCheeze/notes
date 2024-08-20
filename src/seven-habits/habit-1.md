@@ -1,7 +1,3 @@
----
-title: "Habit 1: Be Proactive"
----
-
 # Habit 1: Be Proactive
 
 ## Proactivity
