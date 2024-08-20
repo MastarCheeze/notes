@@ -20,9 +20,7 @@ const baseTemplate = (await fs.readFile(BASE_TEMPLATE_PATH, { encoding: "utf-8" 
 const templates = Object.fromEntries(Object.keys(TEMPLATE_PATHS).map((key) => [key, ""])) as typeof TEMPLATE_PATHS;
 for (const [key, path] of Object.entries(TEMPLATE_PATHS)) {
     templates[key as PageType] = (await fs.readFile(path, { encoding: "utf-8" })).normalize();
-    console.log(templates[key as PageType]);
 }
-console.log(baseTemplate);
 
 export function compile(contents: string, template: PageType, config: CompileConfig) {
     /**
@@ -31,7 +29,6 @@ export function compile(contents: string, template: PageType, config: CompileCon
 
     let doc = baseTemplate;
     doc = doc.replace("{{template}}", templates[template]);
-    console.log(doc)
 
     doc = doc.replace("{{content}}", contents);
     doc = doc.replace("{{title}}", config.title);
