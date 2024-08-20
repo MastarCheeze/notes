@@ -7,6 +7,10 @@ import { compile } from "./compile.js";
 import type { CompileConfig, Breadcrumb, DirTree } from "./compile.js";
 
 async function main() {
+    let stats = {
+        compiled: 0,
+        error: 0,
+    }
     const breadcrumb: Breadcrumb = []; // current location in the filesystem
 
     async function recursiveCompile(currDirSrc: string): Promise<DirTree[0] | undefined> {
@@ -30,7 +34,12 @@ async function main() {
         }
         if (hasIndexMd) {  // parse index.md to prepare for compiling
             const markdown = await fs.readFile(indexSrc, { encoding: "utf-8" });
-            ({ parsed: indexParsed, metadata: indexMetadata } = parse(markdown));
+            try {
+                ({ parsed: indexParsed, metadata: indexMetadata } = parse(markdown));
+            } catch (error) {
+                if (VERBOSE)
+                    console.error(`An error occured while trying to parse ${indexSrc}: ${error}`);
+            }
         }
         const currDirTitle = indexMetadata?.title ?? path.basename(currDirOut);
 
@@ -58,7 +67,15 @@ async function main() {
 
                 // parse
                 const markdown = await fs.readFile(src, { encoding: "utf-8" });
-                const { parsed, metadata } = parse(markdown);
+                let parsed, metadata;
+                try {
+                    ({ parsed, metadata } = parse(markdown));
+                } catch (error) {
+                    if (VERBOSE)
+                        console.error(`An error occured while trying to parse ${src}: ${error}`);
+                    ++stats.error;
+                    continue;
+                }
 
                 // compile
                 const title = metadata.title ?? path.basename(out);
@@ -71,6 +88,9 @@ async function main() {
 
                 // write
                 await fs.writeFile(out, doc);
+                if (VERBOSE)
+                    console.debug(`Successfully compiled ${src}`);
+                ++stats.compiled;
 
                 const link = path.relative(OUT_DIR, out);
                 dirTree.push({
@@ -101,6 +121,9 @@ async function main() {
 
             // write
             await fs.writeFile(indexOut, doc);
+            if (VERBOSE)
+                console.debug(`Successfully compiled ${indexSrc}`);
+            ++stats.compiled;
         }
         breadcrumb.pop();
 
@@ -117,13 +140,25 @@ async function main() {
     }
 
     await recursiveCompile(SRC_DIR);
+
+    console.debug("========================");
+    console.debug(`Compilation complete.\ncompiled: ${stats.compiled}\nerrors: ${stats.error}`);
+    console.debug("========================");
 }
 
-function parseArgvAfterFlag(flag: string) {
-    const args: string[] = [];
-    const idx = process.argv.indexOf(flag);
-    if (idx === -1) return args;
+function parseArgvFlag(...flags: string[]) {
+    let flag;
+    let idx = -1;
+    for (flag of flags) {
+        idx = process.argv.indexOf(flag);
+        if (idx !== -1)
+            break;
+    }
+    if (idx === -1)
+        return [];
+    assert(flag);
 
+    const args: string[] = [flag];
     let currIdx = idx + 1;
     while (!(process.argv[currIdx] === undefined || process.argv[currIdx].startsWith("-"))) {
         args.push(process.argv[currIdx]);
@@ -135,7 +170,8 @@ function parseArgvAfterFlag(flag: string) {
 
 // parse cli args
 const SRC_DIR = process.argv[2]!;
-const OUT_DIR = parseArgvAfterFlag("-o")[0]!;
-const BASE_URL = parseArgvAfterFlag("--base-url")[0]!;
+const OUT_DIR = parseArgvFlag("-o")[1]!;
+const BASE_URL = parseArgvFlag("--base-url")[1]!;
+const VERBOSE = parseArgvFlag("-v", "--verbose").length >= 1;
 
 await main();
