@@ -75,7 +75,7 @@ async function main() {
                 }
 
                 // compile
-                const title = metadata.title ?? path.basename(out);
+                const title = (metadata.title ?? path.basename(out)) + (entry.name.endsWith(".private.md") ? " 🔒" : "");
                 const options: CompileConfig = {
                     title: title,
                     breadcrumb: [...breadcrumb, ["📄 " + title, null]],
