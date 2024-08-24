@@ -145,3 +145,8 @@ blockquote {
     border-radius: 0 4px 4px 0;
     border-start-start-radius: 0px;
 }
+
+hr {
+    margin: 2rem 0.5rem;
+    border-top: 2px solid hsl(38, 24%, 75%);
+}
