@@ -28,12 +28,10 @@ jobs:
       with:
         node-version: latest
     - name: Install dependencies
-      run: npm install
-    - run: |
-        str="${{ github.repository }}"
-        substr="${{ github.repository_owner }}"
-        echo ${str#${substr}}/
-    - name: Compile files
+      run: npm --prefix scripts install
+    - name: Compile TS files
+      run: tsc -b scripts
+    - name: Compile MD files
       run: |
         str="${{ github.repository }}"
         substr="${{ github.repository_owner }}"
