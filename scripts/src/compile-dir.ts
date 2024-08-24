@@ -5,6 +5,7 @@ import assert from "node:assert";
 import { parse } from "./parse.js";
 import { compile } from "./compile.js";
 import type { CompileConfig, Breadcrumb, DirTree } from "./compile.js";
+import { title } from "node:process";
 
 async function main() {
     let stats = {
@@ -23,6 +24,7 @@ async function main() {
 
         // check if index.md exists
         const indexSrc = path.join(currDirSrc, "index.md");
+        const indexOut = path.join(currDirOut, "index.html");
         let hasIndexMd = true;
         let indexParsed = null;
         let indexMetadata = null;
@@ -42,11 +44,8 @@ async function main() {
         }
         const currDirTitle = indexMetadata?.title ?? path.basename(currDirOut);
 
-        // link to index.html only if render dir tree is enabled
-        if (indexMetadata?.dirTree)
-            breadcrumb.push([currDirTitle, currDirLink]);
-        else
-            breadcrumb.push([currDirTitle, null]);
+        // link to index.html
+        breadcrumb.push([currDirTitle, currDirLink]);
 
         // loop through all entries in directory
         const entries = await fs.readdir(currDirSrc, { withFileTypes: true });
@@ -104,26 +103,19 @@ async function main() {
             }
         }
 
-        // compile index.md if only if render dir tree is enabled
-        if (indexMetadata?.dirTree) {
-            assert(indexParsed !== null && indexMetadata !== null);
-            const indexOut = path.join(currDirOut, "index.html");
-
-            // compile
-            const options: CompileConfig = {
-                title: currDirTitle,
-                breadcrumb: breadcrumb,
-                baseUrl: BASE_URL,
-                dirTree: dirTree,
-            };
-            const doc = compile(indexParsed, "index", options);
-
-            // write
-            await fs.writeFile(indexOut, doc);
-            if (VERBOSE)
-                console.debug(`Compiled ${indexSrc}`);
-            ++stats.compiled;
+        // compile and write index.md
+        const options: CompileConfig = {
+            title: currDirTitle,
+            breadcrumb: breadcrumb,
+            baseUrl: BASE_URL,
+            dirTree: dirTree,
         }
+        const doc = compile(indexParsed ?? "", "index", options);
+        await fs.writeFile(indexOut, doc);
+        if (VERBOSE)
+            console.debug(`Compiled ${indexSrc}`);
+        ++stats.compiled;
+
         breadcrumb.pop();
 
         // join subtree with parent tree, only if folder has one or more compiled files
@@ -131,8 +123,7 @@ async function main() {
             return {
                 order: indexMetadata?.order ?? null,
                 label: currDirTitle,
-                // link to index.html only if render dir tree is enabled
-                link: indexMetadata?.dirTree ? currDirLink : null,
+                link: currDirLink,
                 subtree: dirTree,
             };
         }
