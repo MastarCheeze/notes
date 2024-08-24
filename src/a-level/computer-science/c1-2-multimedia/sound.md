@@ -6,6 +6,7 @@
 - Sampling rate
   - Number of samples taken per second
   - Pitch
+
 - Sampling resolution
   - Number of bits used to represent each sample
   - Amplitude
