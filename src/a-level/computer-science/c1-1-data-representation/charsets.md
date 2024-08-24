@@ -5,18 +5,18 @@
 
 ## ASCII
 
-> 7-bit
-> 128 characters
-> English language
+- 7-bit
+- 128 characters
+- English language
 
 ## ASCII extended
 
-> 8-bit
-> 256 characters
-> English language & European languages with diacritics
+- 8-bit
+- 256 characters
+- English language & European languages with diacritics
 
 ## Unicode
 
-> 16-bit or 32-bit
-> 150,000+ characters <sup>✝</sup> <!-- superscript/subscript in markdown -->
-> Many languages & emojis
+- 16-bit or 32-bit
+- 150,000+ characters <sup>✝</sup> <!-- superscript/subscript in markdown -->
+- Many languages & emojis
