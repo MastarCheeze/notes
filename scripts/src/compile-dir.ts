@@ -5,7 +5,6 @@ import assert from "node:assert";
 import { parse } from "./parse.js";
 import { compile } from "./compile.js";
 import type { CompileConfig, Breadcrumb, DirTree } from "./compile.js";
-import { title } from "node:process";
 
 async function main() {
     let stats = {
