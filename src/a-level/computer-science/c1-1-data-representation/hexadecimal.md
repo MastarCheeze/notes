@@ -10,19 +10,19 @@ order: 20
 1 hex digit = 4 binary digits
 
 Advantages
--   Takes up less **screen** space
--   Easier to read, write and understand
--   Easier to debug
+- Takes up less **screen** space
+- Easier to read, write and understand
+- Easier to debug
 
 ## Uses
 
--   Assembly
--   Machine code
--   Memory address
--   Memory dumps (debugging)
--   ASCII / Unicode
--   HTML Colour codes
--   Error codes
--   MAC address
--   IP address
--   URL
+- Assembly
+- Machine code
+- Memory address
+- Memory dumps (debugging)
+- ASCII / Unicode
+- HTML Colour codes
+- Error codes
+- MAC address
+- IP address
+- URL
