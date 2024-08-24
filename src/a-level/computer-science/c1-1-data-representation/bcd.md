@@ -1,3 +1,7 @@
+---
+order: 30
+---
+
 # Binary Coded Decimal (BCD)
 
 > Each denary digit represented separately by 4 digit code

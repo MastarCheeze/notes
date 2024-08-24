@@ -1,3 +1,7 @@
+---
+order: 10
+---
+
 # Binary
 
 > Base 2
