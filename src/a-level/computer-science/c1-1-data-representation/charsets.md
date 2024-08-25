@@ -18,5 +18,5 @@
 ## Unicode
 
 - 16-bit or 32-bit
-- 150,000+ characters <sup>✝</sup> <!-- superscript/subscript in markdown -->
+- 150,000+ characters <sup>✝</sup> <!-- TODO superscript/subscript in markdown -->
 - Many languages & emojis
