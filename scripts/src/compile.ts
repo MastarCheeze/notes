@@ -2,19 +2,19 @@ import fs from "node:fs/promises";
 import type { PageType } from "./parse.js";
 
 export type Breadcrumb = [label: string, link: string | null][];
-export type DirTree = { order: number | null, label: string, link: string | null, subtree?: DirTree }[];
+export type DirTree = { order: number | null; label: string; link: string | null; subtree?: DirTree }[];
 export type CompileConfig = {
     title: string;
     breadcrumb: Breadcrumb;
     baseUrl: string;
     dirTree?: DirTree;
-}
+};
 
 const BASE_TEMPLATE_PATH = "scripts/src/templates/base.html";
 const TEMPLATE_PATHS: { [key in PageType]: string } = {
-    "page": "scripts/src/templates/page.html",
-    "index": "scripts/src/templates/index.html",
-}
+    page: "scripts/src/templates/page.html",
+    index: "scripts/src/templates/index.html",
+};
 
 const baseTemplate = (await fs.readFile(BASE_TEMPLATE_PATH, { encoding: "utf-8" })).normalize();
 const templates = Object.fromEntries(Object.keys(TEMPLATE_PATHS).map((key) => [key, ""])) as typeof TEMPLATE_PATHS;
@@ -45,44 +45,47 @@ export function compile(contents: string, template: PageType, config: CompileCon
 function createBreadcrumb(breadcrumb: CompileConfig["breadcrumb"]) {
     let html = "";
     for (const [label, link] of breadcrumb) {
-        if (link !== null)
+        if (link !== null) {
             html += `<li><a href="${link}">${label}</a></li>`;
-        else
+        } else {
             html += `<li>${label}</li>`;
+        }
     }
     return html;
 }
 
 function createDirTree(dirTree: CompileConfig["dirTree"]) {
-    if (dirTree === undefined)
-        return "";
+    if (dirTree === undefined) return "";
 
     function recursiveCreate(dirTree: DirTree) {
         dirTree.sort((a, b) => {
             // sort by explicit order first
             const orderScore = (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY);
-            if (!Number.isNaN(orderScore) && orderScore !== 0)
+            if (!Number.isNaN(orderScore) && orderScore !== 0) {
                 return orderScore;
+            }
 
             // sort by folder/file
             const folderScore = (a.subtree ? 0 : 1) - (b.subtree ? 0 : 1);
-            if (!Number.isNaN(folderScore) && folderScore !== 0)
+            if (!Number.isNaN(folderScore) && folderScore !== 0) {
                 return folderScore;
+            }
 
             // sort alphabetically
             return a.label.localeCompare(b.label);
-        })
+        });
 
         let html = `<ul style="display: none;">`;
         for (const entry of dirTree) {
-            if (entry.subtree === undefined)
+            if (entry.subtree === undefined) {
                 html += `<li><a href="${entry.link}">📄 ${entry.label}</a></li>`;
-            else {
+            } else {
                 html += `<li><a class="folderButton">📁 </a>`;
-                if (entry.link !== null)
+                if (entry.link !== null) {
                     html += `<a href="${entry.link}">${entry.label}</a>`;
-                else
+                } else {
                     html += `<span>${entry.label}</span>`;
+                }
                 html += `${recursiveCreate(entry.subtree)}</li>`;
             }
         }
