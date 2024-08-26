@@ -1,4 +1,4 @@
-# P/PC balance
+# P/PC Balance
 
 Effectiveness is the balance of **production (P)** & **production capability (PC)**
 

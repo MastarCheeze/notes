@@ -1,4 +1,4 @@
-# Habits defined
+# Habits Defined
 
 > Intersection of knowledge, skill and desire
 
