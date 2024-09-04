@@ -6,7 +6,7 @@ import { Compiler } from "./compile.js";
 import { Logger, parseArgvFlag } from "./utils.js";
 
 const SRC_DIR = "src";
-const OUT_DIR = "build"; // use public folder for site building
+const OUT_DIR = "build/public";
 const ABS_URL_PREFIX = parseArgvFlag("--abs-url-prefix")[1] ?? "";
 const VERBOSE = parseArgvFlag("-v", "--verbose").length != 0;
 
@@ -20,8 +20,11 @@ const stats = {
 
 const titleRegex = /^\s*#\s+(.*)/;
 
+const registerDirFuncs: (() => ReturnType<typeof registerDir>)[] = [];
 function recursiveCompile(dirSrc: string) {
-    let registerDirFlag = false;
+    // setup for directory registration
+    registerDirFuncs.push(registerDir.bind(null, dirSrc));
+    let dirFilePaths: ReturnType<typeof registerDir>[] = [];
 
     // loop through all entries in directory
     const entries = fs.readdirSync(dirSrc, { withFileTypes: true });
@@ -31,14 +34,14 @@ function recursiveCompile(dirSrc: string) {
         if (entry.isDirectory()) {
             // recurse deeper if directory
             recursiveCompile(src);
-        } else if (entry.name === "index.md") {
-            // skip if index.md because already parsed
         } else if (entry.name.endsWith(".md")) {
-            // directory contains md files, so register it a single time
-            if (!registerDirFlag) {
-                registerDir(dirSrc);
-                registerDirFlag = true;
+            // register all directories that are pending
+            while (registerDirFuncs.length !== 0) {
+                const registerDirFunc = registerDirFuncs.shift()!;
+                dirFilePaths.push(registerDirFunc());
             }
+
+            if (entry.name === "index.md") continue; // compile index file only after all children files are registered
 
             // compile md file
             const { link, out } = registerMarkdownFile(src);
@@ -53,15 +56,31 @@ function recursiveCompile(dirSrc: string) {
             fs.cpSync(src, out, { recursive: true });
         }
     }
+
+    // pop off current registerDirFunc because there are no md files
+    registerDirFuncs.pop();
+
+    // compile all index files that are pending
+    for (const {dirLink, dirOut} of dirFilePaths) {
+        const link = path.join(dirLink, "index.md");
+        const out = path.join(dirOut, "index.md");
+        const compiled = compiler.compileIndex(link);
+        fs.writeFileSync(out, compiled);
+
+        logger.log(`Compiled ${link}`);
+        ++stats.success;
+    }
 }
 
 function registerDir(dirSrc: string) {
+    // HERE separate register dir with register index.md
+
     // create directory
     const dirOut = dirSrc.replace(SRC_DIR, OUT_DIR);
     const dirLink = path.relative(OUT_DIR, dirOut);
     fs.mkdirSync(dirOut, { recursive: true });
 
-    // check if index.md exists
+    // compile index.md
     const src = path.join(dirSrc, "index.md");
     if (fs.existsSync(src)) {
         const markdown = fs.readFileSync(src, { encoding: "utf-8" });
@@ -81,7 +100,7 @@ function registerDir(dirSrc: string) {
         });
     }
 
-    return { dirOut, dirLink };
+    return { dirLink, dirOut };
 }
 
 function registerMarkdownFile(src: string) {
