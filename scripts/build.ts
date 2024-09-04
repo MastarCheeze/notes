@@ -6,7 +6,7 @@ import { Compiler } from "./compile.js";
 import { Logger, parseArgvFlag } from "./utils.js";
 
 const SRC_DIR = "src";
-const OUT_DIR = "build";
+const OUT_DIR = "build"; // use public folder for site building
 const ABS_URL_PREFIX = parseArgvFlag("--abs-url-prefix")[1] ?? "";
 const VERBOSE = parseArgvFlag("-v", "--verbose").length != 0;
 
@@ -50,7 +50,7 @@ function recursiveCompile(dirSrc: string) {
         } else {
             // copy all other files as is
             const out = src.replace(SRC_DIR, OUT_DIR);
-            fs.copyFileSync(src, out);
+            fs.cpSync(src, out, { recursive: true });
         }
     }
 }
@@ -59,7 +59,7 @@ function registerDir(dirSrc: string) {
     // create directory
     const dirOut = dirSrc.replace(SRC_DIR, OUT_DIR);
     const dirLink = path.relative(OUT_DIR, dirOut);
-    fs.mkdirSync(dirOut);
+    fs.mkdirSync(dirOut, { recursive: true });
 
     // check if index.md exists
     const src = path.join(dirSrc, "index.md");
@@ -99,3 +99,6 @@ function registerMarkdownFile(src: string) {
 
     return { link, out };
 }
+
+// === MAIN ===
+recursiveCompile(SRC_DIR);
