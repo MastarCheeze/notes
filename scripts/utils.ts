@@ -1,3 +1,5 @@
+import assert from "node:assert";
+
 export function parseArgvFlag(...flags: string[]) {
     let flag;
     let idx = -1;
