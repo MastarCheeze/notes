@@ -35,7 +35,7 @@ jobs:
       run: |
         str="${{ github.repository }}"
         substr="${{ github.repository_owner }}"
-        node scripts/build/compile-dir.js src -o build -v --base-url ${str#${substr}}/
+        node build/scripts/build.js src -o build/public -v --base-url ${str#${substr}}/
     - uses: actions/upload-artifact@v4
       with:
         name: build-artifact
