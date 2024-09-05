@@ -110,15 +110,20 @@ export class Compiler {
         const breadcrumb: Breadcrumb = [];
         let curLink = link;
         do {
+            const curIsDir = this.fileMap[curLink].isDir;
             breadcrumb.splice(0, 0, {
                 link: (() => {
-                    if (!isDir) return normalizeRelPath(path.relative(path.dirname(link), curLink));
-                    // the link of a dir is the dirname, so no need for path.dirname
-                    // might be avoidable if index.md is registered instead of the dir?
-                    else return normalizeRelPath(path.relative(link, curLink));
+                    if (curIsDir) {
+                        // the link of a dir is the dirname, so no need for path.dirname
+                        // might be avoidable if index.md is registered instead of the dir?
+                        let from = !isDir ? path.dirname(link) : link;
+                        return normalizeRelPath(path.relative(from, curLink));
+                    } else {
+                        return null;
+                    }
                 })(),
                 label: this.fileMap[curLink].label,
-                isDir: this.fileMap[curLink].isDir,
+                isDir: curIsDir,
             });
             curLink = normalizeRelPath(path.join(curLink, ".."));
         } while (curLink !== "./..");
