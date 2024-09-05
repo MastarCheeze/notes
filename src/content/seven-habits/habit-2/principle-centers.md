@@ -1,5 +1,5 @@
 ---
-title: "Principle Centers"
+title: Principle Centers
 ---
 
 ## Center of a paradigm

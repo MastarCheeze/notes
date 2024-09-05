@@ -1,5 +1,5 @@
 ---
-title: "A Level"
+title: A Level
 order: 100
 ---
 
