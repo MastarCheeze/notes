@@ -98,7 +98,7 @@ export class DirCompiler {
             const { content, metadata } = parse(markdown);
             this.compiler.register(dirLink, {
                 content,
-                label: metadata?.label ?? content.match(titleRegex)?.[1] ?? path.basename(dirOut),
+                label: metadata?.title ?? content.match(titleRegex)?.[1] ?? path.basename(dirOut),
                 order: metadata?.order ? parseInt(metadata.order) : null,
                 isDir: true,
             });
@@ -122,7 +122,7 @@ export class DirCompiler {
         const { content, metadata } = parse(markdown);
         this.compiler.register(link, {
             content,
-            label: metadata?.label ?? content.match(titleRegex)?.[1] ?? path.basename(out),
+            label: metadata?.title ?? content.match(titleRegex)?.[1] ?? path.basename(out),
             order: metadata?.order ? parseInt(metadata.order) : null,
             isDir: false,
         });
