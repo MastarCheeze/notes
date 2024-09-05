@@ -7,4 +7,6 @@ mkdir build/public
 
 tsc --build
 
-node --enable-source-maps build/scripts/build.js -v
+# build site
+cp -r src/assets build/public/assets
+node --enable-source-maps build/scripts/build.js src/content -o build/public/content -v

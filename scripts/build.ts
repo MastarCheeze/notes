@@ -5,10 +5,16 @@ import { parse } from "./parse.js";
 import { Compiler } from "./compile.js";
 import { Logger, parseArgvFlag } from "./utils.js";
 
-const SRC_DIR = "src";
-const OUT_DIR = "build/public";
+const SRC_DIR = process.argv[1];
+const OUT_DIR = parseArgvFlag("-o", "--output")[1];
 const ABS_URL_PREFIX = parseArgvFlag("--abs-url-prefix")[1] ?? "";
 const VERBOSE = parseArgvFlag("-v", "--verbose").length != 0;
+
+if (SRC_DIR === undefined) {
+    throw "Please provide a source folder";
+} else if (OUT_DIR === undefined) {
+    throw "Please provide an output folder";
+}
 
 const compiler = new Compiler();
 const logger = new Logger(VERBOSE);
@@ -61,10 +67,10 @@ function recursiveCompile(dirSrc: string) {
     registerDirFuncs.pop();
 
     // compile all index files that are pending
-    for (const {dirLink, dirOut} of dirFilePaths) {
+    for (const { dirLink, dirOut } of dirFilePaths) {
         const link = path.join(dirLink, "index.md");
-        const out = path.join(dirOut, "index.md");
-        const compiled = compiler.compileIndex(link);
+        const out = path.join(dirOut, "index.html");
+        const compiled = compiler.compileIndex(dirLink);
         fs.writeFileSync(out, compiled);
 
         logger.log(`Compiled ${link}`);
