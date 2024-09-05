@@ -10,7 +10,11 @@ const titleRegex = /^\s*#\s+(.*)/;
 
 export class DirCompiler {
     stats: { success: number; warning: number; error: number };
-    private registerDirFuncs: (() => ReturnType<InstanceType<typeof DirCompiler>["registerDir"]>)[];
+    private registerDirFuncs: [
+        dirSrc: string,
+        dirFunc: () => ReturnType<InstanceType<typeof DirCompiler>["registerDir"]>
+    ][];
+    private dirFilePaths: { [dirSrc: string]: ReturnType<InstanceType<typeof DirCompiler>["registerDir"]> };
 
     constructor(
         public srcDir: string,
@@ -26,6 +30,7 @@ export class DirCompiler {
         };
 
         this.registerDirFuncs = [];
+        this.dirFilePaths = {};
     }
 
     compile() {
@@ -34,8 +39,7 @@ export class DirCompiler {
 
     private recursiveCompile(dirSrc: string) {
         // setup for directory registration
-        this.registerDirFuncs.push(this.registerDir.bind(this, dirSrc));
-        let dirFilePaths: ReturnType<typeof this.registerDir>[] = [];
+        this.registerDirFuncs.push([dirSrc, this.registerDir.bind(this, dirSrc)]);
 
         // loop through all entries in directory
         const entries = fs.readdirSync(dirSrc, { withFileTypes: true });
@@ -48,8 +52,8 @@ export class DirCompiler {
             } else if (entry.name.endsWith(".md")) {
                 // register all directories that are pending
                 while (this.registerDirFuncs.length !== 0) {
-                    const registerDirFunc = this.registerDirFuncs.shift()!;
-                    dirFilePaths.push(registerDirFunc());
+                    const [registerDirSrc, registerDirFunc] = this.registerDirFuncs.shift()!;
+                    this.dirFilePaths[registerDirSrc] = registerDirFunc();
                 }
 
                 if (entry.name === "index.md") continue; // compile index file only after all children files are registered
@@ -68,11 +72,9 @@ export class DirCompiler {
             }
         }
 
-        // pop off current registerDirFunc because there are no md files
-        this.registerDirFuncs.pop();
-
-        // compile all index files that are pending
-        for (const { dirLink, dirOut } of dirFilePaths) {
+        // compile index file
+        if (this.dirFilePaths[dirSrc]) {
+            const { dirLink, dirOut } = this.dirFilePaths[dirSrc];
             const link = path.join(dirLink, "index.md");
             const out = path.join(dirOut, "index.html");
             const compiled = this.postCompiler.compile(this.compiler.compileIndex(dirLink));
