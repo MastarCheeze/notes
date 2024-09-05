@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "src/**"
   workflow_dispatch:
 
 permissions:
@@ -28,9 +26,9 @@ jobs:
       with:
         node-version: latest
     - name: Install dependencies
-      run: npm --prefix scripts install
+      run: npm install
     - name: Compile TS files
-      run: tsc -b scripts
+      run: tsc --build
     - name: Compile MD files
       run: |
         str="${{ github.repository }}"
