@@ -89,7 +89,7 @@ export class Compiler {
         const fileEntry = this.fileMap[normalizeRelPath(link)];
         const doc = compileFile(fileEntry.content, templates.page, {
             title: fileEntry.label,
-            breadcrumb: this.compileBreadcrumb(link),
+            breadcrumb: this.compileBreadcrumb(link, false),
         });
         return doc;
     }
@@ -98,20 +98,25 @@ export class Compiler {
         const fileEntry = this.fileMap[normalizeRelPath(link)];
         const doc = compileFile(fileEntry.content, templates.index, {
             title: fileEntry.label,
-            breadcrumb: this.compileBreadcrumb(link),
+            breadcrumb: this.compileBreadcrumb(link, true),
             dirTree: this.compileDirTree(link),
         });
         return doc;
     }
 
-    private compileBreadcrumb(link: string) {
+    private compileBreadcrumb(link: string, isDir: boolean) {
         link = normalizeRelPath(link);
 
         const breadcrumb: Breadcrumb = [];
         let curLink = link;
         do {
             breadcrumb.splice(0, 0, {
-                link: normalizeRelPath(path.relative(path.dirname(link), curLink)),
+                link: (() => {
+                    if (!isDir) return normalizeRelPath(path.relative(path.dirname(link), curLink));
+                    // the link of a dir is the dirname, so no need for path.dirname
+                    // might be avoidable if index.md is registered instead of the dir?
+                    else return normalizeRelPath(path.relative(link, curLink));
+                })(),
                 label: this.fileMap[curLink].label,
                 isDir: this.fileMap[curLink].isDir,
             });
