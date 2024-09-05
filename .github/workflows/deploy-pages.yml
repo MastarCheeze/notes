@@ -50,7 +50,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-artifact
-          path: build/
+          path: build/public
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
