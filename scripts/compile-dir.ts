@@ -4,23 +4,21 @@ import path from "node:path";
 import { parse } from "./parse.js";
 import type { Compiler } from "./compile.js";
 import type { Logger } from "./utils.js";
+import type { PostCompiler } from "./post-compile.js";
 
 const titleRegex = /^\s*#\s+(.*)/;
 
 export class DirCompiler {
-    srcDir: string;
-    outDir: string;
-    compiler: Compiler;
-    logger: Logger;
     stats: { success: number; warning: number; error: number };
-    private registerDirFuncs: (() => ReturnType<(InstanceType<typeof DirCompiler>)["registerDir"]>)[];
+    private registerDirFuncs: (() => ReturnType<InstanceType<typeof DirCompiler>["registerDir"]>)[];
 
-    constructor(srcDir:string, outDir:string, compiler: Compiler, logger: Logger) {
-        this.srcDir = srcDir;
-        this.outDir = outDir;
-
-        this.compiler = compiler;
-        this.logger = logger;
+    constructor(
+        public srcDir: string,
+        public outDir: string,
+        public compiler: Compiler,
+        public postCompiler: PostCompiler,
+        public logger: Logger
+    ) {
         this.stats = {
             success: 0,
             warning: 0,
@@ -58,7 +56,7 @@ export class DirCompiler {
 
                 // compile md file
                 const { link, out } = this.registerMarkdownFile(src);
-                const compiled = this.compiler.compile(link);
+                const compiled = this.postCompiler.compile(this.compiler.compile(link));
                 fs.writeFileSync(out, compiled);
 
                 this.logger.log(`Compiled ${link}`);
@@ -77,7 +75,7 @@ export class DirCompiler {
         for (const { dirLink, dirOut } of dirFilePaths) {
             const link = path.join(dirLink, "index.md");
             const out = path.join(dirOut, "index.html");
-            const compiled = this.compiler.compileIndex(dirLink);
+            const compiled = this.postCompiler.compile(this.compiler.compileIndex(dirLink));
             fs.writeFileSync(out, compiled);
 
             this.logger.log(`Compiled ${link}`);

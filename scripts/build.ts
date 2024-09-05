@@ -4,6 +4,7 @@ import path from "node:path";
 import { DirCompiler } from "./compile-dir.js";
 import { Compiler } from "./compile.js";
 import { Logger, parseArgvFlag } from "./utils.js";
+import { PostCompiler } from "./post-compile.js";
 
 const CONTENT_DIR_NAME = "content";
 const ASSETS_DIR_NAME = "assets";
@@ -31,12 +32,14 @@ fs.cpSync(path.join(SRC_DIR, ASSETS_DIR_NAME), path.join(OUT_DIR, ASSETS_DIR_NAM
 
 // compile contents
 const compiler = new Compiler();
+const postCompiler = new PostCompiler(ABS_URL_PREFIX);
 const logger = new Logger(VERBOSE);
 
 const dirCompiler = new DirCompiler(
     path.join(SRC_DIR, CONTENT_DIR_NAME),
     path.join(OUT_DIR, CONTENT_DIR_NAME),
     compiler,
+    postCompiler,
     logger
 );
 dirCompiler.compile();
