@@ -97,7 +97,7 @@ export class Compiler {
 
     compileIndex(link: string): string {
         const fileEntry = this.fileMap[normalizeRelPath(link)];
-        const doc = compileFile(fileEntry.content, templates.page, {
+        const doc = compileFile(fileEntry.content, templates.index, {
             title: fileEntry.label,
             breadcrumb: this.compileBreadcrumb(link),
             dirTree: this.compileDirTree(link),
@@ -106,8 +106,10 @@ export class Compiler {
     }
 
     private compileBreadcrumb(link: string) {
+        link = normalizeRelPath(link);
+
         const breadcrumb: Breadcrumb = [];
-        let curLink = normalizeRelPath(link);
+        let curLink = link;
         do {
             breadcrumb.splice(0, 0, {
                 link: normalizeRelPath(path.relative(path.dirname(link), curLink)),
@@ -120,6 +122,8 @@ export class Compiler {
     }
 
     private compileDirTree(link: string): string {
+        link = normalizeRelPath(link);
+
         // recursive create dirtree
         const recursiveConvert = (curPart: string, curDirTree: DirTreeMap) => {
             // convert dirtreemap into list for sorting
