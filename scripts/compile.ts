@@ -44,15 +44,14 @@ function normalizeRelPath(link: string) {
 function replaceVariables(str: string, vars: Record<string, string>): string {
     let ret = str;
     for (const [key, value] of Object.entries(vars)) {
-        ret.replaceAll(new RegExp(`\\$\\{\\s*${key}\\s*\\}`, "g"), value);
+        ret = ret.replaceAll(new RegExp(`\\$\\{\\s*${key}\\s*\\}`, "g"), value);
     }
     return ret;
 }
 
 function compileFile(markdown: string, template: string, vars: Record<string, string>): string {
     const content = compileTool(markdown);
-    let doc = baseTemplate;
-    doc = replaceVariables(doc, { template });
+    let doc = template;
     doc = replaceVariables(doc, vars);
     doc = replaceVariables(doc, { content });
     // doc = replaceVariables(doc, { ".*": "" });
