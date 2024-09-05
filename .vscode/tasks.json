@@ -4,7 +4,7 @@
     {
       "label": "Compile markdown to site",
       "type": "shell",
-      "command": "bash ./scripts/build.sh",
+      "command": "tsc --build; node --enable-source-maps build/scripts/build.js src -o build/public -v",
       "group": "build",
       "presentation": {
         "reveal": "silent",
