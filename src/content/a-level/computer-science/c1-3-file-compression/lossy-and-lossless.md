@@ -8,11 +8,11 @@ title: Lossy and Lossless Compression
 > Reduce file size by **permanently** removing data
 
 Lossy
-- ✅ More compression
+- ✅. More compression
   - Less storage space
   - Faster transmission
   - Less bandwidth
-- ❌ Quality lost
+- ❌. Quality lost
 
 # Lossless
 
@@ -21,12 +21,12 @@ Lossy
 > Original file can be restored
 
 Lossless
-- ❌ Less compression
+- ❌. Less compression
   - More storage space
   - Slower transmission
   - More bandwidth
-- ✅ Quality preserved
-- ✅ Can edit original file
+- ✅. Quality preserved
+- ✅. Can edit original file
 
 <!-- TODO tick and cross as list bullet points -->
 <!-- TODO two column layout -->
