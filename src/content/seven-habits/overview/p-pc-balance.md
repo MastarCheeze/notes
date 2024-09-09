@@ -7,3 +7,7 @@ Over extended, worn out, can’t produce any more
 
 ### Too much PC
 Never producing
+
+## Every P problem is a PC opportunity
+
+A chance to build the [Emotional Bank Account](../interdependence/emotional-bank-account.md)
