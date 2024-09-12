@@ -13,4 +13,4 @@
 - Focusing here expands circle of influence
   (so we can better address concerns)
 
-![How proactive and reactive focus affects the circle of influence](assets/images/seven-habits/circle-of-concern-and-influence.png)
+![How proactive and reactive focus affects the circle of influence](/assets/images/seven-habits/circle-of-concern-and-influence.png)

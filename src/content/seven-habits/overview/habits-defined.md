@@ -2,7 +2,7 @@
 
 > Intersection of knowledge, skill and desire
 
-![Habits defined](assets/images/seven-habits/habits-defined.png)
+![Habits defined](/assets/images/seven-habits/habits-defined.png)
 
 **Knowledge**: what to do
 **Skill**: how to do
