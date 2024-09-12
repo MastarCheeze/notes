@@ -1,5 +1,5 @@
 const absUrlRegex = /\b(href|src)=["'](\/.*?)["']/g;
-const mdExtensionRegex = /\bhref=["'](.*\.md?)["']/g;
+const mdExtensionRegex = /\bhref=["'](.*\.md?)(#.+)?["']/g;
 const customListBulletsRegex = /<li>((?<symbol>.)\. ).*/g;
 
 export class PostCompiler {
