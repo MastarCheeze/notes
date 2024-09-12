@@ -1,10 +1,5 @@
 # Six Paradigms of Human Interaction
 
-### Win/Win ✅
-
-Mutually beneficial
-Cooperative, not competitive
-
 ### Win/Lose
 
 "I win, you lose"
@@ -30,7 +25,16 @@ Just want to win, doesn't care if others win or lose
 No sense of competition
 Only caring for yourself
 
-### Win/Win or No Deal ✅
+### Win/Win
+
+✅ Good solution
+
+Mutually beneficial
+Cooperative, not competitive
+
+### Win/Win or No Deal
+
+✅ Best solution
 
 If Win/Win is not possible, disagree agreeably
 Rather than doing something at the expense of others, do something else
