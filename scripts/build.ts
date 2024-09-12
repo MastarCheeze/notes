@@ -46,7 +46,7 @@ const dirCompiler = new DirCompiler(
     path.join(OUT_DIR, CONTENT_DIR_NAME),
     compiler,
     postCompiler,
-    logger.log,
+    logger.log.bind(logger),
 );
 dirCompiler.compile();
 
