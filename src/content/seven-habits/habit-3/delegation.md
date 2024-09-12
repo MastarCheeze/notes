@@ -30,12 +30,12 @@ Trust is the highest form of human motivation
 
 #### Consequences
 - What will happen after evaluation (both good and bad)
-- Examples:
-  - Financial rewards
-  - Psychic rewards
-  - Job assignments
-  - Natural consequences
-
+- Types of consequences:
+  - Financial
+  - Psychic (recognition, respect)
+  - Oppurtunity (training, development, perks)
+  - Responsibility (scope, authority)
+  - Natural
 
 ### Adapting to different kinds of persons
 

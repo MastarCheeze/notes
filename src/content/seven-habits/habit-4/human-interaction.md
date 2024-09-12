@@ -6,12 +6,21 @@
 Competitive
 Authoritarian
 
+**🔄 Good when:**
+Not interdependent with competitor
+No relationship, no need to cooperate
+
 ### Lose/Win
 
 "I lose, you win"
 No expectations
 Giving up
 Buried feelings
+
+**🔄 Good when:**
+When issue is not that important
+Isn't worth the time/effort, relationship is more important
+Compromise, low form of Win/Win
 
 ### Lose/Lose
 
@@ -27,15 +36,13 @@ Only caring for yourself
 
 ### Win/Win
 
-✅ Good solution
-
+**✅ Good**
 Mutually beneficial
 Cooperative, not competitive
 
 ### Win/Win or No Deal
 
-✅ Best solution
-
+**✅ Best**
 If Win/Win is not possible, disagree agreeably
 Rather than doing something at the expense of others, do something else
 Provides freedom: you don't have to drive for what you want by pushing/manipulating
