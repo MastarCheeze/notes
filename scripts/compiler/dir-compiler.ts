@@ -2,9 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { parse } from "./parse.js";
-import type { Compiler } from "./compile.js";
-import type { Logger } from "./utils.js";
-import type { PostCompiler } from "./post-compile.js";
+import type { Compiler } from "./compiler.js";
+import type { PostCompiler } from "./post-compiler.js";
 
 const titleRegex = /^\s*#\s+(.*)/;
 
@@ -21,7 +20,7 @@ export class DirCompiler {
         public outDir: string,
         public compiler: Compiler,
         public postCompiler: PostCompiler,
-        public logger: Logger
+        public log: (msg: string) => void,
     ) {
         this.stats = {
             success: 0,
@@ -63,7 +62,7 @@ export class DirCompiler {
                 const compiled = this.postCompiler.compile(this.compiler.compile(link));
                 fs.writeFileSync(out, compiled);
 
-                this.logger.log(`Compiled ${link}`);
+                this.log(`Compiled ${link}`);
                 ++this.stats.success;
             } else {
                 // copy all other files as is
@@ -80,7 +79,7 @@ export class DirCompiler {
             const compiled = this.postCompiler.compile(this.compiler.compileIndex(dirLink));
             fs.writeFileSync(out, compiled);
 
-            this.logger.log(`Compiled ${link}`);
+            this.log(`Compiled ${link}`);
             ++this.stats.success;
         }
     }

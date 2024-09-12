@@ -2,9 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
 
-import { compileTool } from "./compile-tool.js";
-import { createBreadcrumb, createDirTree } from "./compile-components.js";
-import type { Breadcrumb, DirTree } from "./compile-components.js";
+import { compile } from "./wrapper.js";
+import { createBreadcrumb, createDirTree } from "./page-components.js";
+import type { Breadcrumb, DirTree } from "./page-components.js";
 
 type FileMap = {
     [link: string]: {
@@ -50,7 +50,7 @@ function replaceVariables(str: string, vars: Record<string, string>): string {
 }
 
 function compileFile(markdown: string, template: string, vars: Record<string, string>): string {
-    const content = compileTool(markdown);
+    const content = compile(markdown);
     let doc = template;
     doc = replaceVariables(doc, vars);
     doc = replaceVariables(doc, { content });

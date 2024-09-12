@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { DirCompiler } from "./compile-dir.js";
-import { Compiler } from "./compile.js";
+import { DirCompiler } from "./compiler/dir-compiler.js";
+import { Compiler } from "./compiler/compiler.js";
 import { Logger, parseArgvFlag } from "./utils.js";
-import { PostCompiler } from "./post-compile.js";
+import { PostCompiler } from "./compiler/post-compiler.js";
 
 const CONTENT_DIR_NAME = "content";
 
@@ -37,8 +37,8 @@ for (const filename of fs.readdirSync(SRC_DIR)) {
 }
 
 // compile contents
-const compiler = new Compiler();
-const postCompiler = new PostCompiler(ABS_URL_PREFIX);
+const compiler = new Compiler(); // TODO: create these in dircompiler module
+const postCompiler = new PostCompiler(ABS_URL_PREFIX); // TODO: create these in dircompiler module
 const logger = new Logger(VERBOSE);
 
 const dirCompiler = new DirCompiler(
@@ -46,7 +46,7 @@ const dirCompiler = new DirCompiler(
     path.join(OUT_DIR, CONTENT_DIR_NAME),
     compiler,
     postCompiler,
-    logger
+    logger.log,
 );
 dirCompiler.compile();
 
