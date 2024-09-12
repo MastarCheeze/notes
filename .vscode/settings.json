@@ -1,3 +1,6 @@
 {
     "liveServer.settings.root": "build/public",
+    "triggerTaskOnSave.tasks": {
+        "Compile markdown to site": ["src/content/**"],
+    }
 }

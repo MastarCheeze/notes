@@ -7,7 +7,6 @@ import { Logger, parseArgvFlag } from "./utils.js";
 import { PostCompiler } from "./post-compile.js";
 
 const CONTENT_DIR_NAME = "content";
-const ASSETS_DIR_NAME = "assets";
 
 // parse argv
 const SRC_DIR = process.argv[2]; // src
@@ -27,8 +26,15 @@ try {
 } catch {}
 fs.mkdirSync(OUT_DIR);
 
-// copy assets folder
-fs.cpSync(path.join(SRC_DIR, ASSETS_DIR_NAME), path.join(OUT_DIR, ASSETS_DIR_NAME), { recursive: true });
+// copy all folders except content
+for (const filename of fs.readdirSync(SRC_DIR)) {
+    if (filename === CONTENT_DIR_NAME) continue;
+    fs.cpSync(
+        path.join(SRC_DIR, filename),
+        path.join(OUT_DIR, filename),
+        { recursive: true }
+    );
+}
 
 // compile contents
 const compiler = new Compiler();
