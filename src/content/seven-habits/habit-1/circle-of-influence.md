@@ -1,12 +1,12 @@
 # Circle of concern / circle of influence
 
-#### Circle of concern
+## Circle of concern
 
 - Things we have no control over
 - Worrying and regretting
 - Focusing here accomplishes nothing
 
-#### Circle of influence
+## Circle of influence
 
 - Things we can control
 - Doing
