@@ -41,21 +41,21 @@ nav#breadcrumb li a {
     text-decoration: none;
 }
 
-div#dir-tree {
+div#directory {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-div#dir-tree a {
+div#directory a {
     text-decoration: none;
 }
 
-div#dir-tree ul {
+div#directory ul {
     margin: 0 0 0 initial;
     font-size: large;
     list-style-type: none;
 }
 
-div#dir-tree .folderButton {
+div#directory .folderButton {
     cursor: pointer;
     user-select: none;
 }
