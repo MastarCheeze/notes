@@ -13,6 +13,15 @@
       "args": ["src", "-o", "build/public", "-v"],
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current File",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${file}",
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     }
   ]
 }
