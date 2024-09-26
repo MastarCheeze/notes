@@ -23,6 +23,9 @@ class Registry {
     }
 
     register(link: string, details: Entry) {
+        link = Registry.normalize(link);
+        if (details.isFolder) details.indexLink = Registry.normalize(details.indexLink);
+
         // add entry to parent folder
         const parentFolder = [...this.traverse(path.dirname(link))].at(-1);
         if (!parentFolder || !parentFolder.isFolder) throw `Path not found ${link}`;
@@ -53,6 +56,10 @@ class Registry {
             yield curEntry;
             curFolder = curEntry;
         }
+    }
+
+    private static normalize(link: string) {
+        return path.normalize(link);
     }
 }
 
