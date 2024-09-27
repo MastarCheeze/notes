@@ -1,10 +1,10 @@
-type DirectoryArgs = { label: string; link: string | null; subdir: DirectoryArgs | null }[];
+type DirectoryArgs = { title: string; link: string | null; subdir: DirectoryArgs | null }[];
 
 function createDirectory(directory: DirectoryArgs) {
     const recursiveCreate = (curDirectory: DirectoryArgs) => {
         let html = `<ul style="display: none;">`; // collapse folder by default
         for (const entry of curDirectory) {
-            let li = entry.label;
+            let li = entry.title;
             if (entry.subdir === null) {
                 li = `📄 ${li}`;
             }

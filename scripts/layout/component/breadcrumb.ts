@@ -1,4 +1,4 @@
-type BreadcrumbArgs = { breadcrumb: { label: string; link: string | null }[], lastFileIsDir: boolean};
+type BreadcrumbArgs = { breadcrumb: { title: string; link: string | null }[], lastFileIsDir: boolean};
 
 function createBreadcrumb(breadcrumb: BreadcrumbArgs) {
     let html = "";
@@ -9,9 +9,9 @@ function createBreadcrumb(breadcrumb: BreadcrumbArgs) {
         }
 
         if (entry.link) {
-            html += `<li><a href="${entry.link}">${icon}${entry.label}</a></li>`;
+            html += `<li><a href="${entry.link}">${icon}${entry.title}</a></li>`;
         } else {
-            html += `<li>${icon}${entry.label}</li>`;
+            html += `<li>${icon}${entry.title}</li>`;
         }
     }
     return html;
