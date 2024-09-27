@@ -1,10 +1,10 @@
-type BreadcrumbArgs = { breadcrumb: { title: string; link: string | null }[], lastFileIsDir: boolean};
+type BreadcrumbArgs = { breadcrumb: { title: string; link: string | null }[]; lastEntryIsFile: boolean };
 
 function createBreadcrumb(breadcrumb: BreadcrumbArgs) {
     let html = "";
     for (const [i, entry] of breadcrumb.breadcrumb.entries()) {
         let icon = "";
-        if (i === breadcrumb.breadcrumb.length && breadcrumb.lastFileIsDir) {
+        if (i === breadcrumb.breadcrumb.length - 1 && breadcrumb.lastEntryIsFile) {
             icon = "📄 ";
         }
 

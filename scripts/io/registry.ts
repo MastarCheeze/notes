@@ -45,7 +45,7 @@ class Registry {
     }
 
     // follows the link and return all its parent folders and the file
-    private *traverse(link: string) {
+    *traverse(link: string) {
         let curEntry: Entry | undefined = this.root;
         for (const curLink of Registry.getTraversalLinks(link)) {
             if (curEntry === undefined) throw `Path not found: ${link}`;
@@ -53,7 +53,7 @@ class Registry {
             yield curEntry;
             curEntry = curEntry.subdir?.[curLink];
         }
-        yield curEntry;
+        yield curEntry!;
     }
 
     private static normalize(link: string) {
