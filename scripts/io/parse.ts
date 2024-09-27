@@ -16,15 +16,15 @@ function parseMetadata(header: string) {
     return metadata;
 }
 
-function parse(markdown: string) {
-    const match = headerRegex.exec(markdown);
-    if (match === null) return { content: markdown, metadata: null };
+function parse(raw: string) {
+    const match = headerRegex.exec(raw);
+    if (match === null) return { markdown: raw, metadata: null };
 
     const header = match.groups?.header;
-    const content = match.groups?.content;
-    if (header === undefined || content === undefined) throw "Error while parsing markdown";
+    const markdown = match.groups?.content;
+    if (header === undefined || markdown === undefined) throw "Error while parsing markdown";
 
-    return { content: content, metadata: parseMetadata(header) };
+    return { markdown: markdown, metadata: parseMetadata(header) };
 }
 
 export { parse };
