@@ -16,7 +16,7 @@ function parseMetadata(header: string) {
     return metadata;
 }
 
-export function parse(markdown: string) {
+function parse(markdown: string) {
     const match = headerRegex.exec(markdown);
     if (match === null) return { content: markdown, metadata: null };
 
@@ -26,3 +26,5 @@ export function parse(markdown: string) {
 
     return { content: content, metadata: parseMetadata(header) };
 }
+
+export { parse };
