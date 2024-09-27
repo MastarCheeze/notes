@@ -1,39 +1,37 @@
 import path from "node:path";
 
-type FileEntry = {
-    isFolder: false;
-    label: string;
-    order: number | null;
-    content: string;
+type Entry = {
+    link: string;
+    subdir: { [link: string]: Entry } | null;
+    [prop: string]: any;
 };
-type FolderEntry = {
-    isFolder: true;
-    label: string;
-    order: number | null;
-    indexLink: string;
-    subdir: { [link: string]: Entry };
-};
-type Entry = FileEntry | FolderEntry;
 
 class Registry {
-    private root: FolderEntry;
+    private root: Entry = { link: "", subdir: {} };
 
-    constructor(root: FolderEntry) {
-        this.root = root;
-    }
+    constructor() {}
 
     register(link: string, details: Entry) {
         link = Registry.normalize(link);
-        if (details.isFolder) details.indexLink = Registry.normalize(details.indexLink);
 
         // add entry to parent folder
         const parentFolder = [...this.traverse(path.dirname(link))].at(-1);
-        if (!parentFolder || !parentFolder.isFolder) throw `Path not found ${link}`;
+        if (!parentFolder || parentFolder.subdir === null) throw `Path not found ${link}`;
         parentFolder.subdir[link] = details;
+    }
+
+    unregister(link: string) {
+        link = Registry.normalize(link);
+
+        const parentFolder = [...this.traverse(path.dirname(link))].at(-1);
+        if (!parentFolder || parentFolder.subdir === null) throw `Path not found ${link}`;
+        delete parentFolder.subdir[link];
     }
 
     // "one/two/three" returns ["one", "one/two", "one/two/three"]
     private static *getTraversalLinks(link: string) {
+        if (link === ".") return;
+
         let lastIndex = 0;
         while (true) {
             lastIndex = link.indexOf(path.sep, lastIndex);
@@ -48,14 +46,14 @@ class Registry {
 
     // follows the link and return all its parent folders and the file
     private *traverse(link: string) {
-        let curFolder = this.root;
+        let curEntry: Entry | undefined = this.root;
         for (const curLink of Registry.getTraversalLinks(link)) {
-            const curEntry = curFolder.subdir[curLink];
-            if (!curEntry || !curEntry.isFolder) throw `Path not found: ${link}`;
+            if (curEntry === undefined) throw `Path not found: ${link}`;
 
             yield curEntry;
-            curFolder = curEntry;
+            curEntry = curEntry.subdir?.[curLink];
         }
+        yield curEntry;
     }
 
     private static normalize(link: string) {
@@ -63,5 +61,4 @@ class Registry {
     }
 }
 
-export { Registry };
-export { FileEntry, FolderEntry, Entry };
+export { Registry, Entry };
