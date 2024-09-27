@@ -151,7 +151,4 @@ class SiteBuilder {
     }
 }
 
-const obj = new SiteBuilder("src", "build/public");
-obj.compile();
-
-throw "";
+export { SiteBuilder };
