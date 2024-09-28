@@ -77,6 +77,7 @@ class SiteBuilder {
 
     private compileFolder(src: string, link: string) {
         // check for index file
+        let markdown: string = "";
         let metadata: Record<string, string> | null = null;
         let content = "";
 
@@ -84,12 +85,11 @@ class SiteBuilder {
         const indexLink = path.join(link, "index.html");
         if (fs.existsSync(indexSrc)) {
             const raw = fs.readFileSync(indexSrc, { encoding: "utf-8" });
-            let markdown;
             ({ markdown, metadata } = parse(raw));
             content = compile(markdown);
         }
 
-        const title = metadata?.title ?? content.match(TITLE_REGEX)?.[1] ?? path.basename(src).replace(".md", ".html");
+        const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src);
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;
 
         // register folder
@@ -144,7 +144,7 @@ class SiteBuilder {
         const { markdown, metadata } = parse(raw);
         const content = compile(markdown);
 
-        const title = metadata?.title ?? content.match(TITLE_REGEX)?.[1] ?? path.basename(src).replace(".md", ".html");
+        const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src).replace(".md", ".html");
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;
 
         // register file
