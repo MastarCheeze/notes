@@ -18,13 +18,21 @@ class SiteBuilder {
     private registerFolderFuncStack: (() => void)[] = [];
     private registerFolderStatusStack: boolean[] = [];
 
+    private logger: ((text: string) => void) | null = null;
+    private loggerStats = {
+        success: 0,
+        error: 0,
+    };
+
     constructor(rootSrc: string, rootOut: string) {
         this.rootSrc = rootSrc;
         this.rootOut = rootOut;
     }
 
     build() {
+        this.log("Compiling...");
         this.buildRecursive(this.rootSrc);
+        this.log(`Done compiling: ${this.loggerStats.success} compiled, ${this.loggerStats.error} failed`);
     }
 
     private buildRecursive(dirSrc: string) {
@@ -37,7 +45,14 @@ class SiteBuilder {
                 this.initRegisterFolder(src, link);
             } else if (src.endsWith(".md")) {
                 this.registerFolder();
-                this.compilePage(src, link);
+                try {
+                    this.compilePage(src, link);
+                    this.log(`Compiled: ${link}`);
+                    this.loggerStats.success += 1;
+                } catch (e) {
+                    this.log(`Error while compiling ${link}: ${e}`);
+                    this.loggerStats.error += 1;
+                }
             } else {
                 this.compileAsset(src, link);
             }
@@ -148,6 +163,14 @@ class SiteBuilder {
         // copy all other files as is
         const out = src.replace(this.rootSrc, this.rootOut);
         fs.cpSync(src, out, { recursive: true });
+    }
+
+    attachLogger(logger: (text: string) => void) {
+        this.logger = logger;
+    }
+
+    private log(text: string) {
+        this.logger?.(text);
     }
 }
 
