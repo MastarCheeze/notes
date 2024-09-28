@@ -177,7 +177,6 @@ class SiteBuilder {
             const entry = this.registry.get(entryLink);
             breadcrumb.push({ title: entry.title, link: entryLink });
         }
-        breadcrumb.splice(0, 1); // first item is the root entry, delete it
         return { breadcrumb, lastEntryIsFile };
     }
 
