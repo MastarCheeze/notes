@@ -22,3 +22,4 @@ function buildIndex(content: string, title: string, breadcrumb: BreadcrumbArgs, 
 }
 
 export { buildPage, buildIndex };
+export { BreadcrumbArgs, DirectoryArgs };
