@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "marked": "^14.0.0",
+    "marked-directive": "^1.0.7",
     "marked-katex-extension": "^5.1.1",
     "node-html-parser": "^6.1.13",
     "parse-md": "^3.0.3"
