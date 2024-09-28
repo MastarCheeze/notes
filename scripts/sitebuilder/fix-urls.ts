@@ -13,8 +13,6 @@ function fixUrls(html: string, oldAbsRoot: string, newAbsRoot: string): string {
         // replace all absolute urls to start with the new absolute prefix
         if (newUrl.startsWith("/" + oldAbsRoot)) {
             newUrl = path.normalize(newUrl.replace("/" + oldAbsRoot, "/" + newAbsRoot));
-        } else if (newUrl.startsWith("/")) {
-            newUrl = path.join("/" + newAbsRoot, newUrl);
         }
 
         // replace all urls to .md files with their .html equivalents
