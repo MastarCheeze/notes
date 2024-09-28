@@ -39,8 +39,8 @@ class SiteBuilder {
         this.log(`Done compiling: ${this.loggerStats.success} compiled, ${this.loggerStats.error} failed`);
     }
 
-    private compile(markdown: string) {
-        return fixUrls(compile(markdown), this.rootSrc, this.absUrlPrefix);
+    private fixUrls(html: string) {
+        return fixUrls(html, this.rootSrc, this.absUrlPrefix);
     }
 
     private buildRecursive(dirSrc: string) {
@@ -51,7 +51,7 @@ class SiteBuilder {
 
             if (entry.isDirectory()) {
                 try {
-                    const success = this.compileFolder(src, link)
+                    const success = this.compileFolder(src, link);
                     if (success) {
                         this.log(`Compiled: ${link}`);
                         this.loggerStats.success += 1;
@@ -93,7 +93,7 @@ class SiteBuilder {
         if (fs.existsSync(indexSrc)) {
             const raw = fs.readFileSync(indexSrc, { encoding: "utf-8" });
             ({ markdown, metadata } = parse(raw));
-            content = this.compile(markdown);
+            content = compile(markdown);
         }
 
         const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src);
@@ -136,7 +136,7 @@ class SiteBuilder {
         // build site components and html page
         const breadcrumb = this.buildBreadcrumbArgs(parentSrc, false);
         const directory = this.buildDirectoryArgs(entry.subdir!);
-        const html = buildIndex(content, entry.title, breadcrumb, directory);
+        const html = this.fixUrls(buildIndex(content, entry.title, breadcrumb, directory));
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(INDEX_FILE, "index.html");
@@ -148,7 +148,7 @@ class SiteBuilder {
         // read and compile markdown
         const raw = fs.readFileSync(src, { encoding: "utf-8" });
         const { markdown, metadata } = parse(raw);
-        const content = this.compile(markdown);
+        const content = compile(markdown);
 
         const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src).replace(".md", ".html");
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;
@@ -164,7 +164,7 @@ class SiteBuilder {
 
         // build site components and html page
         const breadcrumb = this.buildBreadcrumbArgs(link, true);
-        const html = buildPage(content, entry.title, breadcrumb);
+        const html = this.fixUrls(buildPage(content, entry.title, breadcrumb));
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(".md", ".html");

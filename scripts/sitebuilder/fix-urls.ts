@@ -1,6 +1,6 @@
 import path from "node:path";
 
-const URL_REGEX = /\b(href|src)=["'](?<url>\/.*?)["']/g;
+const URL_REGEX = /\b(href|src)=["'](?<url>.*?)["']/g;
 
 function fixUrls(html: string, oldAbsRoot: string, newAbsRoot: string): string {
     // find all urls in html
