@@ -94,7 +94,6 @@ class SiteBuilder {
 
         // register folder
         const entry = {
-            link: link,
             subdir: {},
             title: title ?? path.basename(src),
             order: order,
@@ -150,7 +149,6 @@ class SiteBuilder {
         // register file
         link = link.replace(".md", ".html");
         const entry = {
-            link: link,
             subdir: null,
             title: title,
             order: order,
@@ -175,8 +173,9 @@ class SiteBuilder {
 
     private buildBreadcrumbArgs(link: string, lastEntryIsFile: boolean): BreadcrumbArgs {
         const breadcrumb = [];
-        for (const entry of this.registry.traverse(link)) {
-            breadcrumb.push({ title: entry.title, link: entry.link });
+        for (const entryLink of Registry.traverseLinks(link)) {
+            const entry = this.registry.get(entryLink);
+            breadcrumb.push({ title: entry.title, link: entryLink });
         }
         breadcrumb.splice(0, 1); // first item is the root entry, delete it
         return { breadcrumb, lastEntryIsFile };
