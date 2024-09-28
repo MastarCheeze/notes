@@ -34,7 +34,7 @@ title: Scalar and Vector
 
 ## Vector operations
 
-![Vector addition and subtraction](/assets/images/a-level/physics/vector-addition-subtraction.png)
+![Vector addition and subtraction](/src/assets/images/a-level/physics/vector-addition-subtraction.png)
 
 **Addition**
 Join both vectors <u>head to tail</u>,
@@ -48,7 +48,7 @@ draw line from a to b (minuend to subtrahend)
 
 Any vector can be represented by two *perpendicular* vector components
 
-![Vector components](/assets/images/a-level/physics/vector-components.png)
+![Vector components](/src/assets/images/a-level/physics/vector-components.png)
 
 Resolve **towards** angle: **cosine**
 Resolve **away** from angle: **sine**

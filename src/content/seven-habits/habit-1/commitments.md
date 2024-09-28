@@ -1,6 +1,6 @@
 # Commitments
 
-> The centre of the [Circle of Influence](seven-habits/habit-1/circle-of-influence.html)
+> The centre of the [Circle of Influence](./circle-of-influence.md)
 
 #### Ways to control our life
 
