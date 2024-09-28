@@ -113,7 +113,7 @@ class SiteBuilder {
 
         // build site components and html page
         const breadcrumb = this.buildBreadcrumbArgs(parentSrc, false);
-        const directory = this.buildDirectoryArgs();
+        const directory = this.buildDirectoryArgs(entry.subdir!);
         const html = buildIndex(content, entry.title, breadcrumb, directory);
 
         // write file
@@ -170,11 +170,21 @@ class SiteBuilder {
         return { breadcrumb, lastEntryIsFile };
     }
 
-    private buildDirectoryArgs(link: string): DirectoryArgs {}
+    private buildDirectoryArgs(subdir: NonNullable<Entry["subdir"]>): DirectoryArgs {
+        return this.buildDirectoryArgsRecursive(subdir);
+    }
 
-    private buildDirectoryArgsRecursive(link: string, entry: DirectoryArgs) {
-        for (const [link, childEntry] of Object.entries(entry.subdir!)) {
+    private buildDirectoryArgsRecursive(subdir: NonNullable<Entry["subdir"]>): DirectoryArgs {
+        const directory: DirectoryArgs = [];
+        for (const [childLink, childEntry] of Object.entries(subdir)) {
+            directory.push({
+                title: childEntry.title,
+                link: childLink,
+                subdir:
+                    childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
+            });
         }
+        return directory;
     }
 
     attachLogger(logger: (text: string) => void) {
