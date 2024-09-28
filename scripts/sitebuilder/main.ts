@@ -23,11 +23,11 @@ class SiteBuilder {
         this.rootOut = rootOut;
     }
 
-    compile() {
-        this.compileRecursive(this.rootSrc);
+    build() {
+        this.buildRecursive(this.rootSrc);
     }
 
-    private compileRecursive(dirSrc: string) {
+    private buildRecursive(dirSrc: string) {
         const entries = fs.readdirSync(dirSrc, { withFileTypes: true });
         for (const entry of entries) {
             const src = path.join(entry.parentPath, entry.name);
@@ -75,7 +75,7 @@ class SiteBuilder {
         this.registerFolderStatusStack.push(false);
 
         // recurse
-        this.compileRecursive(src);
+        this.buildRecursive(src);
 
         // compile index file if registration is successful
         this.registerFolderFuncStack.pop();
