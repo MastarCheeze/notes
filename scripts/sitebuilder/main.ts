@@ -43,7 +43,16 @@ class SiteBuilder {
             const link = path.relative(this.rootSrc, src);
 
             if (entry.isDirectory()) {
-                this.initRegisterFolder(src, link);
+                try {
+                    const success = this.compileFolder(src, link)
+                    if (success) {
+                        this.log(`Compiled: ${link}`);
+                        this.loggerStats.success += 1;
+                    }
+                } catch (e) {
+                    this.log(`Error while compiling ${link}: ${e}`);
+                    this.loggerStats.error += 1;
+                }
             } else if (src.endsWith(".md")) {
                 this.registerFolder();
 
@@ -66,7 +75,7 @@ class SiteBuilder {
         }
     }
 
-    private initRegisterFolder(src: string, link: string) {
+    private compileFolder(src: string, link: string) {
         // check for index file
         let metadata: Record<string, string> | null = null;
         let content = "";
@@ -105,6 +114,7 @@ class SiteBuilder {
         if (success) {
             this.compileIndex(indexSrc, indexLink, content, entry);
         }
+        return success;
     }
 
     private registerFolder() {
@@ -138,7 +148,7 @@ class SiteBuilder {
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;
 
         // register file
-        link = link.replace(".md", ".html")
+        link = link.replace(".md", ".html");
         const entry = {
             link: link,
             subdir: null,
