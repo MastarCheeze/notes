@@ -10,9 +10,11 @@ function fixUrls(html: string, oldAbsRoot: string, newAbsRoot: string): string {
         const url = match.groups!.url!;
         let newUrl = url;
 
-        // replace all absolute urls with the new root directory
-        if (newUrl.startsWith("/")) {
+        // replace all absolute urls to start with the new absolute prefix
+        if (newUrl.startsWith("/" + oldAbsRoot)) {
             newUrl = path.normalize(newUrl.replace("/" + oldAbsRoot, "/" + newAbsRoot));
+        } else if (newUrl.startsWith("/")) {
+            newUrl = path.join("/" + newAbsRoot, newUrl);
         }
 
         // replace all urls to .md files with their .html equivalents
