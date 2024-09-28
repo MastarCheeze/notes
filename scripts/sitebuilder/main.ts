@@ -46,6 +46,12 @@ class SiteBuilder {
                 this.initRegisterFolder(src, link);
             } else if (src.endsWith(".md")) {
                 this.registerFolder();
+
+                if (src.endsWith(INDEX_FILE)) {
+                    // skip index page for later because all files in the folder need to be registered first
+                    continue;
+                }
+
                 try {
                     this.compilePage(src, link);
                     this.log(`Compiled: ${link}`);
@@ -132,6 +138,7 @@ class SiteBuilder {
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;
 
         // register file
+        link = link.replace(".md", ".html")
         const entry = {
             link: link,
             subdir: null,
@@ -139,11 +146,6 @@ class SiteBuilder {
             order: order,
         };
         this.registry.register(link, entry);
-
-        if (src.endsWith(INDEX_FILE)) {
-            // skip index page for later because all files in the folder need to be registered first
-            return;
-        }
 
         // build site components and html page
         const breadcrumb = this.buildBreadcrumbArgs(link, true);
@@ -177,11 +179,12 @@ class SiteBuilder {
     private buildDirectoryArgsRecursive(subdir: NonNullable<Entry["subdir"]>): DirectoryArgs {
         const directory: DirectoryArgs = [];
         for (const [childLink, childEntry] of Object.entries(subdir)) {
+            if (childLink.endsWith("index.html")) continue;
+
             directory.push({
                 title: childEntry.title,
                 link: childLink,
-                subdir:
-                    childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
+                subdir: childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
             });
         }
         return directory;
