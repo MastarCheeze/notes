@@ -14,4 +14,6 @@ if (SRC === undefined) {
 }
 
 const siteBuilder = new SiteBuilder(SRC, OUT);
-siteBuilder.build()
+if (VERBOSE) siteBuilder.attachLogger(console.log);
+
+siteBuilder.build();
