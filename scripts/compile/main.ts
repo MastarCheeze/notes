@@ -1,11 +1,12 @@
-import { marked } from "marked";
+import { Marked } from "marked";
 import katex from "./katex.js";
-import directive from "./directive/directive.js";
 
-marked.use({ breaks: true }).use(katex).use(directive);
+const marked = new Marked();
+marked.use({ breaks: true });
+marked.use(katex);
 
 function compile(markdown: string) {
     return marked.parse(markdown) as string;
 }
 
-export { compile };
+export { marked, compile };
