@@ -108,12 +108,11 @@ class SiteBuilder {
     }
 
     private compileIndex(src: string, link: string, content: string, entry: Entry) {
-        // build site components and html page
-        const breadcrumb = [];
-        for (const entry of [...this.registry.traverse(path.dirname(link))].slice(1)) {
-            breadcrumb.push({ title: entry.title, link: entry.link });
-        }
+        const parentSrc = path.dirname(link);
 
+        // build site components and html page
+        const breadcrumb = this.buildBreadcrumbArgs(parentSrc);
+        const directory = this.buildDirectoryArgs();
         const html = buildIndex(content, entry.title, { breadcrumb: breadcrumb, lastEntryIsFile: false }, []);
 
         // write file
@@ -146,11 +145,7 @@ class SiteBuilder {
         }
 
         // build site components and html page
-        const breadcrumb = [];
-        for (const entry of [...this.registry.traverse(link)].slice(1)) {
-            breadcrumb.push({ title: entry.title, link: entry.link });
-        }
-
+        const breadcrumb = this.buildBreadcrumbArgs(link);
         const html = buildPage(content, entry.title, { breadcrumb: breadcrumb, lastEntryIsFile: true });
 
         // write file
@@ -163,6 +158,15 @@ class SiteBuilder {
         // copy all other files as is
         const out = src.replace(this.rootSrc, this.rootOut);
         fs.cpSync(src, out, { recursive: true });
+    }
+
+    private buildBreadcrumbArgs(link: string) {
+        const breadcrumb = [];
+        for (const entry of this.registry.traverse(link)) {
+            breadcrumb.push({ title: entry.title, link: entry.link });
+        }
+        breadcrumb.splice(0, 1); // first item is the root entry, delete it
+        return breadcrumb;
     }
 
     attachLogger(logger: (text: string) => void) {
