@@ -56,6 +56,15 @@ class Registry {
         yield curEntry!;
     }
 
+    // follows the link and return the last entry
+    get(link: string) {
+        let entry = null;
+        for (entry of this.traverse(link)) {
+            // do nothing
+        }
+        return entry!;
+    }
+
     private static normalize(link: string) {
         return path.normalize(link);
     }
