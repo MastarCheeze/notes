@@ -6,6 +6,7 @@ import { parse } from "./parse.js";
 import { Entry, Registry } from "./registry.js";
 import { compile } from "../compile/main.js";
 import { buildPage, buildIndex } from "../layout/main.js";
+import type { BreadcrumbArgs, DirectoryArgs } from "../layout/main.js";
 
 const INDEX_FILE = "index.md"; // TODO change this to __index.md to make it at the top of the directory
 const TITLE_REGEX = /^\s*#\s+(.*)/; // regex to find the first h1 in a markdown file
@@ -111,9 +112,9 @@ class SiteBuilder {
         const parentSrc = path.dirname(link);
 
         // build site components and html page
-        const breadcrumb = this.buildBreadcrumbArgs(parentSrc);
+        const breadcrumb = this.buildBreadcrumbArgs(parentSrc, false);
         const directory = this.buildDirectoryArgs();
-        const html = buildIndex(content, entry.title, { breadcrumb: breadcrumb, lastEntryIsFile: false }, []);
+        const html = buildIndex(content, entry.title, breadcrumb, directory);
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(INDEX_FILE, "index.html");
@@ -145,8 +146,8 @@ class SiteBuilder {
         }
 
         // build site components and html page
-        const breadcrumb = this.buildBreadcrumbArgs(link);
-        const html = buildPage(content, entry.title, { breadcrumb: breadcrumb, lastEntryIsFile: true });
+        const breadcrumb = this.buildBreadcrumbArgs(link, true);
+        const html = buildPage(content, entry.title, breadcrumb);
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(".md", ".html");
@@ -160,13 +161,20 @@ class SiteBuilder {
         fs.cpSync(src, out, { recursive: true });
     }
 
-    private buildBreadcrumbArgs(link: string) {
+    private buildBreadcrumbArgs(link: string, lastEntryIsFile: boolean): BreadcrumbArgs {
         const breadcrumb = [];
         for (const entry of this.registry.traverse(link)) {
             breadcrumb.push({ title: entry.title, link: entry.link });
         }
         breadcrumb.splice(0, 1); // first item is the root entry, delete it
-        return breadcrumb;
+        return { breadcrumb, lastEntryIsFile };
+    }
+
+    private buildDirectoryArgs(link: string): DirectoryArgs {}
+
+    private buildDirectoryArgsRecursive(link: string, entry: DirectoryArgs) {
+        for (const [link, childEntry] of Object.entries(entry.subdir!)) {
+        }
     }
 
     attachLogger(logger: (text: string) => void) {
