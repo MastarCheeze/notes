@@ -7,6 +7,7 @@ import { Entry, Registry } from "./registry.js";
 import { compile } from "../compile/main.js";
 import { buildPage, buildIndex } from "../layout/main.js";
 import type { BreadcrumbArgs, DirectoryArgs } from "../layout/main.js";
+import { fixUrls } from "./fix-urls.js";
 
 const INDEX_FILE = "index.md"; // TODO change this to __index.md to make it at the top of the directory
 const TITLE_REGEX = /^\s*#\s+(.*)/; // regex to find the first h1 in a markdown file
@@ -14,6 +15,7 @@ const TITLE_REGEX = /^\s*#\s+(.*)/; // regex to find the first h1 in a markdown 
 class SiteBuilder {
     private rootSrc: string;
     private rootOut: string;
+    private absUrlPrefix: string;
 
     private registry: Registry = new Registry();
     private registerFolderFuncStack: (() => void)[] = [];
@@ -25,15 +27,20 @@ class SiteBuilder {
         error: 0,
     };
 
-    constructor(rootSrc: string, rootOut: string) {
+    constructor(rootSrc: string, rootOut: string, absUrlPrefix: string) {
         this.rootSrc = rootSrc;
         this.rootOut = rootOut;
+        this.absUrlPrefix = absUrlPrefix;
     }
 
     build() {
         this.log("Compiling...");
         this.buildRecursive(this.rootSrc);
         this.log(`Done compiling: ${this.loggerStats.success} compiled, ${this.loggerStats.error} failed`);
+    }
+
+    private compile(markdown: string) {
+        return fixUrls(compile(markdown), this.rootSrc, this.absUrlPrefix);
     }
 
     private buildRecursive(dirSrc: string) {
@@ -86,7 +93,7 @@ class SiteBuilder {
         if (fs.existsSync(indexSrc)) {
             const raw = fs.readFileSync(indexSrc, { encoding: "utf-8" });
             ({ markdown, metadata } = parse(raw));
-            content = compile(markdown);
+            content = this.compile(markdown);
         }
 
         const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src);
@@ -141,7 +148,7 @@ class SiteBuilder {
         // read and compile markdown
         const raw = fs.readFileSync(src, { encoding: "utf-8" });
         const { markdown, metadata } = parse(raw);
-        const content = compile(markdown);
+        const content = this.compile(markdown);
 
         const title = metadata?.title ?? markdown.match(TITLE_REGEX)?.[1] ?? path.basename(src).replace(".md", ".html");
         const order = metadata?.order ? Number.parseInt(metadata.order) : null;

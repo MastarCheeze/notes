@@ -1,3 +1,5 @@
+import path from "node:path";
+
 const URL_REGEX = /\b(href|src)=["'](?<url>\/.*?)["']/g;
 
 function fixUrls(html: string, oldAbsRoot: string, newAbsRoot: string): string {
@@ -10,13 +12,11 @@ function fixUrls(html: string, oldAbsRoot: string, newAbsRoot: string): string {
 
         // replace all absolute urls with the new root directory
         if (newUrl.startsWith("/")) {
-            newUrl = newUrl.replace(oldAbsRoot, newAbsRoot);
+            newUrl = path.normalize(newUrl.replace("/" + oldAbsRoot, "/" + newAbsRoot));
         }
 
         // replace all urls to .md files with their .html equivalents
-        if (newUrl.endsWith(".md")) {
-            newUrl = newUrl.replace(".md", ".html");
-        }
+        newUrl = newUrl.replace(".md", ".html");
 
         html = html.slice(0, match.index) + html.slice(match.index).replace(url, newUrl);
     }

@@ -13,7 +13,7 @@ if (SRC === undefined) {
     throw "Please provide an output folder";
 }
 
-const siteBuilder = new SiteBuilder(SRC, OUT);
+const siteBuilder = new SiteBuilder(SRC, OUT, ABS_URL_PREFIX);
 if (VERBOSE) siteBuilder.attachLogger(console.log);
 
 siteBuilder.build();
