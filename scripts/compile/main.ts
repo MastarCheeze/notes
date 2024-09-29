@@ -1,5 +1,5 @@
 import { Marked } from "marked";
-import { Extension, ExtensionArgs } from "./extension/main.js";
+import { Extension, ExtensionArgs } from "./extension/types.js";
 
 import Katex from "./extension/katex.js";
 import FixUrls from "./extension/fix-urls.js";

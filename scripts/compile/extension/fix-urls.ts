@@ -1,4 +1,4 @@
-import { Extension, ExtensionArgs } from "./main.js";
+import { Extension, ExtensionArgs } from "./types.js";
 import path from "node:path";
 
 const URL_REGEX = /\b(href|src)=["'](?<url>.*?)["']/g;
