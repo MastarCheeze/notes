@@ -8,7 +8,7 @@ import Compiler from "../compiler/main.js";
 import { buildPage, buildIndex } from "../layout/main.js";
 import type { BreadcrumbArgs, DirectoryArgs } from "../layout/main.js";
 
-const INDEX_FILE = "index.md"; // TODO change this to __index.md to make it at the top of the directory
+const INDEX_FILE = "_index.md";
 const TITLE_REGEX = /^\s*#\s+(.*)/; // regex to find the first h1 in a markdown file
 const ABS_URL_REGEX = /\b(href|src)=["'](?<url>\/.*?)["']/g;
 
