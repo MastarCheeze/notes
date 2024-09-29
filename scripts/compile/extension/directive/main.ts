@@ -14,6 +14,12 @@ class Directive extends Extension {
     constructor(args: ExtensionArgs) {
         super(args);
 
+        // initialise extensions
+        for (const extensionClass of Directive.extensionsClasses) {
+            this.extensions.push(new extensionClass(args));
+        }
+
+        // use directives
         const directives: DirectiveConfig[] = [];
         for (const ext of this.extensions) {
             directives.push(ext.directive);
