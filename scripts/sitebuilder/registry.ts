@@ -2,11 +2,12 @@ import path from "node:path";
 
 type Entry = {
     subdir: { [link: string]: Entry } | null;
-    [prop: string]: any;
+    title: string;
+    order: number | null;
 };
 
 class Registry {
-    private root: Entry = { subdir: {} };
+    private root: Entry = { subdir: {}, title: "Root", order: null };
 
     constructor() {}
 
@@ -36,7 +37,7 @@ class Registry {
         while (true) {
             lastIndex = link.indexOf(path.sep, lastIndex);
             if (lastIndex === -1) {
-                yield link
+                yield link;
                 return;
             }
             yield link.substring(0, lastIndex);
@@ -71,4 +72,4 @@ class Registry {
 }
 
 export { Registry, Entry };
-6
+6;
