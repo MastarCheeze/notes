@@ -1,27 +1,27 @@
 import { Marked } from "marked";
 import { Extension, ExtensionArgs } from "./extension/main.js";
-import KatexExtension from "./extension/katex.js";
+import Katex from "./extension/katex.js";
 
 class Compiler {
     private marked: Marked;
     private extensions: Extension[];
 
-    constructor() {
+    constructor(args: { rootSrc: string, rootOut: string, absUrlPrefix: string }) {
         this.marked = new Marked({ breaks: true });
-        const args: ExtensionArgs = {
+        const extensionArgs: ExtensionArgs = {
             marked: this.marked,
-            rootSrc: "",
-            rootOut: "",
-            absUrlPrefix: "",
+            rootSrc: args.rootSrc,
+            rootOut: args.rootOut,
+            absUrlPrefix: args.absUrlPrefix,
         };
 
         // initialise extensions
-        const extensionsClasses: (new (args: ExtensionArgs) => Extension)[] = [
-            KatexExtension
+        const extensionsClasses: (new (extensionArgs: ExtensionArgs) => Extension)[] = [
+            Katex
         ];
         this.extensions = [];
         for (const extensionClass of extensionsClasses) {
-            this.extensions.push(new extensionClass(args));
+            this.extensions.push(new extensionClass(extensionArgs));
         }
     }
 

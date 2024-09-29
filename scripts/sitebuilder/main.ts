@@ -33,7 +33,7 @@ class SiteBuilder {
         this.rootOut = rootOut;
         this.absUrlPrefix = absUrlPrefix;
 
-        this.compiler = new Compiler();
+        this.compiler = new Compiler({ rootSrc, rootOut, absUrlPrefix });
     }
 
     build() {
