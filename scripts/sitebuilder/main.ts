@@ -4,7 +4,7 @@ import path from "node:path";
 import { parse } from "./parse.js";
 
 import { Entry, Registry } from "./registry.js";
-import Compiler from "../compile/main.js";
+import Compiler from "../compiler/main.js";
 import { buildPage, buildIndex } from "../layout/main.js";
 import type { BreadcrumbArgs, DirectoryArgs } from "../layout/main.js";
 
