@@ -1,8 +1,8 @@
 import { Extension, ExtensionArgs } from "./types.js";
-import path from "node:path";
 
-const URL_REGEX = /\b(href|src)=["'](?<url>.*?)["']/g;
+const URL_REGEX = /\[.*\]\((?<url>.*\.md)\)/g;
 
+// replace all urls to .md files with their .html equivalents
 class FixUrls extends Extension {
     private oldAbsRoot: string;
     private newAbsRoot: string;
@@ -13,25 +13,19 @@ class FixUrls extends Extension {
         this.newAbsRoot = "/" + args.absUrlPrefix;
     }
 
-    override postprocess(html: string): string {
+    override preprocess(markdown: string): string {
         while (1) {
-            // find all urls in html
-            const match = URL_REGEX.exec(html);
+            // find all urls to markdown files and images in markdown
+            const match = URL_REGEX.exec(markdown);
             if (match === null) break;
+
             const url = match.groups!.url!;
-            let newUrl = url;
+            let newUrl = url.replace(".md", ".html");
 
-            // replace all absolute urls to start with the new absolute prefix
-            if (newUrl.startsWith(this.oldAbsRoot)) {
-                newUrl = path.normalize(newUrl.replace(this.oldAbsRoot, this.newAbsRoot));
-            }
-
-            // replace all urls to .md files with their .html equivalents
-            newUrl = newUrl.replace(".md", ".html");
-
-            html = html.slice(0, match.index) + html.slice(match.index).replace(url, newUrl);
+            markdown = markdown.slice(0, match.index) + markdown.slice(match.index).replace(url, newUrl);
         }
-        return html;
+
+        return markdown
     }
 }
 
