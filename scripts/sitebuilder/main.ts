@@ -10,6 +10,7 @@ import type { BreadcrumbArgs, DirectoryArgs } from "../layout/main.js";
 
 const INDEX_FILE = "index.md"; // TODO change this to __index.md to make it at the top of the directory
 const TITLE_REGEX = /^\s*#\s+(.*)/; // regex to find the first h1 in a markdown file
+const ABS_URL_REGEX = /\b(href|src)=["'](?<url>\/.*?)["']/g;
 
 class SiteBuilder {
     private rootSrc: string;
@@ -134,7 +135,7 @@ class SiteBuilder {
         const content = this.compiler.compile(markdown);
         const breadcrumb = this.buildBreadcrumbArgs(parentSrc, false);
         const directory = this.buildDirectoryArgs(entry.subdir!);
-        const html = buildIndex(content, entry.title, breadcrumb, directory);
+        const html = this.fixAbsUrl(buildIndex(content, entry.title, breadcrumb, directory));
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(INDEX_FILE, "index.html");
@@ -162,7 +163,7 @@ class SiteBuilder {
         // compile page
         const content = this.compiler.compile(markdown);
         const breadcrumb = this.buildBreadcrumbArgs(link, true);
-        const html = buildPage(content, entry.title, breadcrumb);
+        const html = this.fixAbsUrl(buildPage(content, entry.title, breadcrumb));
 
         // write file
         const out = src.replace(this.rootSrc, this.rootOut).replace(".md", ".html");
@@ -182,7 +183,7 @@ class SiteBuilder {
             const entry = this.registry.get(entryLink);
             breadcrumb.push({
                 title: entry.title,
-                link: path.join("/", this.absUrlPrefix, entryLink),
+                link: path.join("/", this.rootSrc, entryLink),
             });
         }
         return { breadcrumb, lastEntryIsFile };
@@ -198,7 +199,7 @@ class SiteBuilder {
         for (const [childLink, childEntry] of Object.entries(subdir)) {
             if (childLink.endsWith("index.html")) continue;
 
-            const link = path.join("/", this.absUrlPrefix, childLink);
+            const link = path.join("/", this.rootSrc, childLink);
             unsortedDirectory.push([
                 {
                     title: childEntry.title,
@@ -236,6 +237,21 @@ class SiteBuilder {
         });
 
         return directory.map((value) => value[0]); // return DirectoryArgs without the order value
+    }
+
+    private fixAbsUrl(html: string): string {
+        while (1) {
+            // find all urls in html
+            const match = ABS_URL_REGEX.exec(html);
+            if (match === null) break;
+
+            // replace all absolute urls to start with the new absolute prefix
+            const url = match.groups!.url!;
+            let newUrl = path.normalize(url.replace("/" + this.rootSrc, "/" + this.absUrlPrefix));
+
+            html = html.slice(0, match.index) + html.slice(match.index).replace(url, newUrl);
+        }
+        return html;
     }
 
     attachLogger(logger: (text: string) => void) {
