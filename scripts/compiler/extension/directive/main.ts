@@ -1,14 +1,16 @@
 import { Extension, ExtensionArgs } from "../types.js";
 import { createDirectives, DirectiveConfig, presetDirectiveConfigs } from "marked-directive";
+import { DirectiveExtension } from "./types.js";
 
 import { Columns } from "./columns.js";
-import { DirectiveExtension } from "./types.js";
+import { Bullets } from "./bullets.js";
 
 class Directive extends Extension {
     private extensions: DirectiveExtension[] = [];
 
     private static extensionsClasses: (new (extensionArgs: ExtensionArgs) => DirectiveExtension)[] = [
         Columns,
+        Bullets,
     ];
 
     constructor(args: ExtensionArgs) {
@@ -35,14 +37,14 @@ class Directive extends Extension {
         for (const ext of this.extensions) {
             markdown = ext.preprocess(markdown);
         }
-        return markdown
+        return markdown;
     }
 
     override postprocess(html: string): string {
         for (const ext of this.extensions) {
             html = ext.postprocess(html);
         }
-        return html
+        return html;
     }
 }
 
