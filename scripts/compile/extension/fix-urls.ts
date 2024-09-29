@@ -7,12 +7,12 @@ class FixUrls extends Extension {
     private oldAbsRoot!: string;
     private newAbsRoot!: string;
 
-    init(args: ExtensionArgs): void {
+    override init(args: ExtensionArgs): void {
         this.oldAbsRoot = "/" + args.rootSrc;
         this.newAbsRoot = "/" + args.absUrlPrefix;
     }
 
-    postprocess(html: string): string {
+    override postprocess(html: string): string {
         while (1) {
             // find all urls in html
             const match = URL_REGEX.exec(html);
