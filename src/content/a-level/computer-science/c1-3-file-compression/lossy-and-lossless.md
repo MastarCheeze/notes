@@ -8,11 +8,11 @@ title: Lossy and Lossless Compression
 > Reduce file size by **permanently** removing data
 
 Lossy
-- ✅. More compression
+- :bullet[✅] More compression
   - Less storage space
   - Faster transmission
   - Less bandwidth
-- ❌. Quality lost
+- :bullet[❌] Quality lost
 
 # Lossless
 
@@ -21,12 +21,12 @@ Lossy
 > Original file can be restored
 
 Lossless
-- ❌. Less compression
+- :bullet[❌] Less compression
   - More storage space
   - Slower transmission
   - More bandwidth
-- ✅. Quality preserved
-- ✅. Can edit original file
+- :bullet[✅] Quality preserved
+- :bullet[✅] Can edit original file
 
 <!-- TODO tick and cross as list bullet points -->
 <!-- TODO two column layout -->
