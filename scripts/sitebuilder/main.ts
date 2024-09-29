@@ -193,17 +193,49 @@ class SiteBuilder {
     }
 
     private buildDirectoryArgsRecursive(subdir: NonNullable<Entry["subdir"]>): DirectoryArgs {
-        const directory: DirectoryArgs = [];
+        const unsortedDirectory: [DirectoryArgs[0], number | null][] = [];
+
         for (const [childLink, childEntry] of Object.entries(subdir)) {
             if (childLink.endsWith("index.html")) continue;
 
-            directory.push({
-                title: childEntry.title,
-                link: path.join("/", this.absUrlPrefix, childLink),
-                subdir: childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
-            });
+            const link = path.join("/", this.absUrlPrefix, childLink);
+            unsortedDirectory.push([
+                {
+                    title: childEntry.title,
+                    link: link,
+                    subdir: childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
+                },
+                childEntry.order,
+            ]);
         }
-        return directory;
+
+        const sortedDirectory = this.sortDirectoryArgs(unsortedDirectory);
+
+        return sortedDirectory;
+    }
+
+    private sortDirectoryArgs(directory: [DirectoryArgs[0], number | null][]): DirectoryArgs {
+        // sort directory
+        directory.sort((a, b) => {
+            // sort by explicit order
+            const aOrder = a[1];
+            const bOrder = b[1];
+            const orderScore = (aOrder ?? Number.POSITIVE_INFINITY) - (bOrder ?? Number.POSITIVE_INFINITY);
+            if (!Number.isNaN(orderScore) && orderScore !== 0) {
+                return orderScore;
+            }
+
+            // sort by folder/file
+            const folderScore = (a[0].subdir ? 0 : 1) - (b[0].subdir ? 0 : 1);
+            if (!Number.isNaN(folderScore) && folderScore !== 0) {
+                return folderScore;
+            }
+
+            // sort by title alphabetically
+            return a[0].title.localeCompare(b[0].title);
+        });
+
+        return directory.map((value) => value[0]); // return DirectoryArgs without the order value
     }
 
     attachLogger(logger: (text: string) => void) {
