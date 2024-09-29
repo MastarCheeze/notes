@@ -3,7 +3,7 @@ import { Extension, ExtensionArgs } from "./types.js";
 const URL_REGEX = /\[.*\]\((?<url>.*\.md)\)/g;
 
 // replace all urls to .md files with their .html equivalents
-class FixUrls extends Extension {
+class FixMdUrls extends Extension {
     private oldAbsRoot: string;
     private newAbsRoot: string;
 
@@ -29,4 +29,4 @@ class FixUrls extends Extension {
     }
 }
 
-export default FixUrls;
+export default FixMdUrls;

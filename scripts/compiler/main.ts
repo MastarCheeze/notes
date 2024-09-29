@@ -2,7 +2,7 @@ import { Marked } from "marked";
 import { Extension, ExtensionArgs } from "./extension/types.js";
 
 import Katex from "./extension/katex.js";
-import FixUrls from "./extension/fix-urls.js";
+import FixMdUrls from "./extension/fix-urls.js";
 import Directive from "./extension/directive/main.js";
 
 class Compiler {
@@ -11,7 +11,7 @@ class Compiler {
 
     private static extensionsClasses: (new (extensionArgs: ExtensionArgs) => Extension)[] = [
         Katex,
-        FixUrls,
+        FixMdUrls,
         Directive
     ];
 
