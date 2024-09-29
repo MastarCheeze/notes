@@ -5,7 +5,7 @@ import FixUrls from "./extension/fix-urls.js";
 
 class Compiler {
     private marked: Marked;
-    private extensions: Extension[];
+    private extensions: Extension[] = [];
 
     constructor(args: { rootSrc: string, rootOut: string, absUrlPrefix: string }) {
         this.marked = new Marked({ breaks: true });
@@ -21,7 +21,6 @@ class Compiler {
             Katex,
             FixUrls,
         ];
-        this.extensions = [];
         for (const extensionClass of extensionsClasses) {
             this.extensions.push(new extensionClass(extensionArgs));
         }
