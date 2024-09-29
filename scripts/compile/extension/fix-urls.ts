@@ -4,10 +4,11 @@ import path from "node:path";
 const URL_REGEX = /\b(href|src)=["'](?<url>.*?)["']/g;
 
 class FixUrls extends Extension {
-    private oldAbsRoot!: string;
-    private newAbsRoot!: string;
+    private oldAbsRoot: string;
+    private newAbsRoot: string;
 
-    override init(args: ExtensionArgs): void {
+    constructor(args: ExtensionArgs) {
+        super(args);
         this.oldAbsRoot = "/" + args.rootSrc;
         this.newAbsRoot = "/" + args.absUrlPrefix;
     }

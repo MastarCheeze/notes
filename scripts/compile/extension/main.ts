@@ -8,11 +8,7 @@ type ExtensionArgs = {
 };
 
 abstract class Extension {
-    constructor(args: ExtensionArgs) {
-        this.init(args);
-    }
-
-    init(args: ExtensionArgs) {}
+    constructor(args: ExtensionArgs) {}
 
     preprocess(markdown: string): string {
         return markdown;

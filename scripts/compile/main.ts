@@ -34,9 +34,7 @@ class Compiler {
 
         let html = this.marked.parse(markdown) as string;
         for (const ext of this.extensions) {
-            if (ext.postprocess) {
-                html = ext.postprocess(html);
-            }
+            html = ext.postprocess(html);
         }
 
         return html;

@@ -2,7 +2,8 @@ import { Extension, ExtensionArgs } from "./main.js";
 import katex from "marked-katex-extension";
 
 class Katex extends Extension {
-    override init(args: ExtensionArgs) {
+    constructor(args: ExtensionArgs) {
+        super(args);
         args.marked.use(
             katex({
                 macros: { "\\unit": "\\text{~#1}" },
