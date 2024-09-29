@@ -1,7 +1,7 @@
 # Error and Uncertainty
 
 ## Precision vs Accuracy
-![Precision vs accuracy](/assets/images/a-level/physics/precision-vs-accuracy.png)
+![Precision vs accuracy](/src/assets/images/a-level/physics/precision-vs-accuracy.png)
 
 |                     |                        Precision                        |                Accuracy                 |
 | ------------------: | :-----------------------------------------------------: | :-------------------------------------: |
