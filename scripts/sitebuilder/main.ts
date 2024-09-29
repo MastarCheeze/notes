@@ -180,7 +180,10 @@ class SiteBuilder {
         const breadcrumb = [];
         for (const entryLink of Registry.traverseLinks(link)) {
             const entry = this.registry.get(entryLink);
-            breadcrumb.push({ title: entry.title, link: path.join("/", this.rootSrc, entryLink) });
+            breadcrumb.push({
+                title: entry.title,
+                link: path.join("/", this.absUrlPrefix, entryLink),
+            });
         }
         return { breadcrumb, lastEntryIsFile };
     }
@@ -196,7 +199,7 @@ class SiteBuilder {
 
             directory.push({
                 title: childEntry.title,
-                link: path.join("/", this.rootSrc, childLink),
+                link: path.join("/", this.absUrlPrefix, childLink),
                 subdir: childEntry.subdir === null ? null : this.buildDirectoryArgsRecursive(childEntry.subdir),
             });
         }
