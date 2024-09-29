@@ -1,6 +1,7 @@
 import { Marked } from "marked";
 import { Extension, ExtensionArgs } from "./extension/main.js";
 import Katex from "./extension/katex.js";
+import FixUrls from "./extension/fix-urls.js";
 
 class Compiler {
     private marked: Marked;
@@ -17,7 +18,8 @@ class Compiler {
 
         // initialise extensions
         const extensionsClasses: (new (extensionArgs: ExtensionArgs) => Extension)[] = [
-            Katex
+            Katex,
+            FixUrls,
         ];
         this.extensions = [];
         for (const extensionClass of extensionsClasses) {
