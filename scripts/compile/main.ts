@@ -1,12 +1,44 @@
 import { Marked } from "marked";
-import katex from "./katex.js";
+import { Extension, ExtensionArgs } from "./extension/main.js";
+import KatexExtension from "./extension/katex.js";
 
-const marked = new Marked();
-marked.use({ breaks: true });
-marked.use(katex);
+class Compiler {
+    private marked: Marked;
+    private extensions: Extension[];
 
-function compile(markdown: string) {
-    return marked.parse(markdown) as string;
+    constructor() {
+        this.marked = new Marked({ breaks: true });
+        const args: ExtensionArgs = {
+            marked: this.marked,
+            rootSrc: "",
+            rootOut: "",
+            absUrlPrefix: "",
+        };
+
+        // initialise extensions
+        const extensionsClasses: (new (args: ExtensionArgs) => Extension)[] = [
+            KatexExtension
+        ];
+        this.extensions = [];
+        for (const extensionClass of extensionsClasses) {
+            this.extensions.push(new extensionClass(args));
+        }
+    }
+
+    compile(markdown: string): string {
+        for (const ext of this.extensions) {
+            markdown = ext.preprocess(markdown);
+        }
+
+        let html = this.marked.parse(markdown) as string;
+        for (const ext of this.extensions) {
+            if (ext.postprocess) {
+                html = ext.postprocess(html);
+            }
+        }
+
+        return html;
+    }
 }
 
-export { marked, compile };
+export default Compiler;
