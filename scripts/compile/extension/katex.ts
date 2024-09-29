@@ -1,7 +1,7 @@
-import katex from "marked-katex-extension";
 import { Extension, ExtensionArgs } from "./main.js";
+import katex from "marked-katex-extension";
 
-class KatexExtension extends Extension {
+class Katex extends Extension {
     init(args: ExtensionArgs) {
         args.marked.use(
             katex({
@@ -11,4 +11,4 @@ class KatexExtension extends Extension {
     }
 }
 
-export default KatexExtension;
+export default Katex;
