@@ -30,6 +30,20 @@ class Directive extends Extension {
             ...directives,
         ]))
     }
+
+    override preprocess(markdown: string): string {
+        for (const ext of this.extensions) {
+            markdown = ext.preprocess(markdown);
+        }
+        return markdown
+    }
+
+    override postprocess(html: string): string {
+        for (const ext of this.extensions) {
+            html = ext.postprocess(html);
+        }
+        return html
+    }
 }
 
 export default Directive;
