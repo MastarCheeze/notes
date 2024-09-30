@@ -30,7 +30,7 @@ Dealing with Win/Lose is the real challenge of Win/Win
 [Emotional Bank Account](../interdependence/emotional-bank-account.md) is key
 Be genuine
 
-## 3. Agreements
+## 3. Performance Agreements
 
 Supervision ❌, self-supervision and partnership ✅
 Let people evaluate themselves than to evaluate them
@@ -45,5 +45,10 @@ Compete against standards, not people
 ## 5. Process
 
 Focus on interests, not positions
+
+1. See problem from other point of view
+2. Identify key issues and concerns
+3. Determine what results constitute a fully acceptable solution
+4. Identify possible new options
 
 <!-- TODO related to habit 5 and 6 -->
