@@ -27,6 +27,3 @@ Lossless
   - More bandwidth
 - :bullet[✅] Quality preserved
 - :bullet[✅] Can edit original file
-
-<!-- TODO tick and cross as list bullet points -->
-<!-- TODO two column layout -->
