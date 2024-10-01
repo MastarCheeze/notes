@@ -2,6 +2,9 @@
 title: Scalar and Vector
 ---
 
+::::columns
+
+:::
 # Scalar
 
 > Has magnitude
@@ -15,7 +18,9 @@ title: Scalar and Vector
 - Energy
 - Temperature
 - Pressure
+:::
 
+:::
 # Vector
 
 > Has magnitude
@@ -29,6 +34,9 @@ title: Scalar and Vector
 - Momentum
 - Gravitational field strength
 - Electric field strength
+:::
+
+::::
 
 ---
 
@@ -44,7 +52,7 @@ draw line from a to b
 Join both vectors <u>head to head</u>,
 draw line from a to b (minuend to subtrahend)
 
-## Perpendicular components
+## Vector resolution
 
 Any vector can be represented by two *perpendicular* vector components
 
@@ -52,3 +60,5 @@ Any vector can be represented by two *perpendicular* vector components
 
 Resolve **towards** angle: **cosine**
 Resolve **away** from angle: **sine**
+
+<!-- TODO add vector components for weight on a slope -->
