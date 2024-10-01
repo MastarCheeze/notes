@@ -60,5 +60,3 @@ Any vector can be represented by two *perpendicular* vector components
 
 Resolve **towards** angle: **cosine**
 Resolve **away** from angle: **sine**
-
-<!-- TODO add vector components for weight on a slope -->
