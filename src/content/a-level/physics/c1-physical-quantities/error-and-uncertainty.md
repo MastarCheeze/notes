@@ -54,3 +54,4 @@ $$
 
 **Addition/subtraction** - add the absolute uncertainties
 **Multiplication/division** - add the fractional/percentage uncertainties
+**Power/root** - multiply the fractional/percentage uncertainty by the power
