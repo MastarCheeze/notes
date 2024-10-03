@@ -1,6 +1,6 @@
 import { Extension, ExtensionArgs } from "./types.js";
 
-const URL_REGEX = /\[.*\]\((?<url>.*\.md)\)/g;
+const URL_REGEX = /\b(href|src)=["'](?<url>[^"'\s]*?\.md)["']/g;
 
 // replace all urls to .md files with their .html equivalents
 class FixMdUrls extends Extension {
@@ -13,19 +13,19 @@ class FixMdUrls extends Extension {
         this.newAbsRoot = "/" + args.absUrlPrefix;
     }
 
-    override preprocess(markdown: string): string {
+    override postprocess(html: string): string {
         while (1) {
-            // find all urls to markdown files and images in markdown
-            const match = URL_REGEX.exec(markdown);
+            // find all urls to markdown files
+            const match = URL_REGEX.exec(html);
             if (match === null) break;
 
             const url = match.groups!.url!;
             let newUrl = url.replace(".md", ".html");
 
-            markdown = markdown.slice(0, match.index) + markdown.slice(match.index).replace(url, newUrl);
+            html = html.slice(0, match.index) + html.slice(match.index).replace(url, newUrl);
         }
 
-        return markdown
+        return html
     }
 }
 
