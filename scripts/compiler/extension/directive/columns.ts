@@ -16,7 +16,7 @@ class Columns extends DirectiveExtension {
                 if (token.meta.name === "columns") {
                     return `<div class="columns">${args.marked.parse(
                         token.text
-                    )}</span>`;
+                    )}</div>`;
                 }
 
                 return false;
