@@ -1,5 +1,7 @@
-# SUVAT Equations
+# Equations of Motion
 
+> :h3[SUVAT]{style="text-align: center;"}
+> 
 > $$
 > \begin{align*}
 >   v &= u + at \kern4em &\footnotesize\text{(no s)}\\
