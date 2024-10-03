@@ -7,6 +7,6 @@
 
 <br>
 
-:::{style="width: 40vw; margin: 0 auto;"} <!-- TODO make this into a directive -->
+:::imgsize{40vw}
 ![Velocity of projectile motion separated into x and y components](/src/assets/images/a-level/physics/projectile-motion-components-2.png)
 :::
