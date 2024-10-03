@@ -127,11 +127,13 @@ table {
 th {
     font-weight: normal;
     padding: 0.2em 2em;
+    vertical-align: top;
 }
 
 td {
     border-style: none solid;
     padding: 0.2em 0.5em;
+    vertical-align: top;
 }
 
 img {
