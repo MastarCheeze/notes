@@ -34,7 +34,7 @@ Definition: **Measure of inertia** (property that resists change in motion)
 > \end{align*}
 > $$
 >
-> Unit of g: $\mathrm{m\,s^{-2}}$
+> Unit of $g$ = $\mathrm{m\,s^{-2}}$
 
 ## Centre of gravity
 
