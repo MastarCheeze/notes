@@ -2,8 +2,9 @@ import { Extension, ExtensionArgs } from "../types.js";
 import { createDirectives, DirectiveConfig, presetDirectiveConfigs } from "marked-directive";
 import { DirectiveExtension } from "./types.js";
 
-import { Columns } from "./columns.js";
-import { Bullets } from "./bullets.js";
+import Columns from "./columns.js";
+import Bullets from "./bullets.js";
+import YTEmbed from "./yt-embed.js";
 
 class Directive extends Extension {
     private extensions: DirectiveExtension[] = [];
@@ -11,6 +12,7 @@ class Directive extends Extension {
     private static extensionsClasses: (new (extensionArgs: ExtensionArgs) => DirectiveExtension)[] = [
         Columns,
         Bullets,
+        YTEmbed,
     ];
 
     constructor(args: ExtensionArgs) {
