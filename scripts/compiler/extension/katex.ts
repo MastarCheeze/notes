@@ -6,6 +6,7 @@ class Katex extends Extension {
         super(args);
         args.marked.use(
             katex({
+                nonStandard: true,
                 macros: { "\\unit": "\\,\\mathrm{#1}" },
             })
         );
