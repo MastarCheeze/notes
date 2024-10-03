@@ -1,6 +1,6 @@
 import { Extension, ExtensionArgs } from "./types.js";
 
-const URL_REGEX = /\b(href|src)=["'](?<url>[^"'\s]*?\.md)["']/g;
+const URL_REGEX = /\b(href|src)=["'](?<url>[^"'\s]*?\.md(#[^"'\s]*)?)["']/g;
 
 // replace all urls to .md files with their .html equivalents
 class FixMdUrls extends Extension {
