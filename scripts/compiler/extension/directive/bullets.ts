@@ -19,7 +19,6 @@ class Bullets extends DirectiveExtension {
                 if (token.meta.name === "bullet") {
                     return `<compiler-meta type="bullets">${token.text}</compiler-meta>`;
                 }
-
                 return false;
             },
         };
