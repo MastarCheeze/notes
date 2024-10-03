@@ -69,6 +69,10 @@ div.columns div {
     flex: 1 1 0px;
 }
 
+.katex a { /* remove underline from katex links */
+    text-decoration: none;
+}
+
 h1,
 h2 {
     margin: 1.6rem 0 0 0;
