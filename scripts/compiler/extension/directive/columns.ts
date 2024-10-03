@@ -14,7 +14,9 @@ class Columns extends DirectiveExtension {
             marker: "::::",
             renderer(token) {
                 if (token.meta.name === "columns") {
-                    return `<div class="columns">${args.marked.parse(token.text)}</span>`;
+                    return `<div class="columns">${args.marked.parse(
+                        token.text
+                    )}</span>`;
                 }
 
                 return false;
@@ -23,4 +25,4 @@ class Columns extends DirectiveExtension {
     }
 }
 
-export { Columns };
+export default Columns;
