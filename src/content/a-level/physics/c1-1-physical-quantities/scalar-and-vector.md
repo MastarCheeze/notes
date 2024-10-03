@@ -3,7 +3,6 @@ title: Scalar and Vector
 ---
 
 ::::columns
-
 :::
 # Scalar
 
@@ -19,7 +18,6 @@ title: Scalar and Vector
 - Temperature
 - Pressure
 :::
-
 :::
 # Vector
 
@@ -35,7 +33,6 @@ title: Scalar and Vector
 - Gravitational field strength
 - Electric field strength
 :::
-
 ::::
 
 ---

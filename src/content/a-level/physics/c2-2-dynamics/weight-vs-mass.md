@@ -1,7 +1,6 @@
 # Weight vs Mass
 
 ::::columns
-
 :::
 ## Weight
 
@@ -12,7 +11,6 @@ Definition: **Force of gravity acting on object**
 - Vector
 - Is a force
 :::
-
 :::
 ## Mass
 
@@ -22,7 +20,6 @@ Definition: **Measure of inertia** (property that resists change in motion)
 - Fixed
 - Scalar
 :::
-
 ::::
 
 ## Formula
