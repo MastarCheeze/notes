@@ -12,11 +12,11 @@ class Directive extends Extension {
     private extensions: DirectiveExtension[] = [];
 
     private static extensionsClasses: (new (extensionArgs: ExtensionArgs) => DirectiveExtension)[] = [
-        Columns,
         Bullets,
-        YTEmbed,
         InvisibleText,
-        ImageSizing
+        YTEmbed,
+        ImageSizing,
+        Columns,
     ];
 
     constructor(args: ExtensionArgs) {
