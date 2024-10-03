@@ -9,7 +9,7 @@ class YTEmbed extends DirectiveExtension {
         marker: "::",
         renderer(token) {
             if (token.meta.name === "youtube") {
-                return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${
+                return `<iframe width="560" height="315" style="margin: 0 auto; display: block;" src="https://www.youtube.com/embed/${
                     token.attrs?.vid || ""
                 }" title="${
                     token.text
