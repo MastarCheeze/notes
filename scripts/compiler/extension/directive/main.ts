@@ -5,6 +5,7 @@ import { DirectiveExtension } from "./types.js";
 import Columns from "./columns.js";
 import Bullets from "./bullets.js";
 import YTEmbed from "./yt-embed.js";
+import InvisibleText from "./invisible-text.js";
 
 class Directive extends Extension {
     private extensions: DirectiveExtension[] = [];
@@ -13,6 +14,7 @@ class Directive extends Extension {
         Columns,
         Bullets,
         YTEmbed,
+        InvisibleText,
     ];
 
     constructor(args: ExtensionArgs) {
