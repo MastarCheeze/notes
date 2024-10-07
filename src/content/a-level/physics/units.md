@@ -19,10 +19,10 @@
 |      [**Kinematics**](./c2-1-kinematics/)      |       |                          |                          |
 |                 Speed/Velocity                 |  $v$  |   $\mathrm{m\,s^{-1}}$   |            -             |
 |                  Acceleration                  |  $a$  |   $\mathrm{m\,s^{-2}}$   |            -             |
-|        [**Dynamics**](./c2-2-dynamics/)        |       |                          |                          |
+|        [**Dynamics**](./c3-1-dynamics/)        |       |                          |                          |
 |                     Force                      |  $F$  |  $\mathrm{N}$ (newton)   | $\mathrm{kg\,m\,s^{-2}}$ |
-|    [Momentum](./c2-2-dynamics/momentum.md)     |  $p$  | $\mathrm{kg\,m\,s^{-1}}$ |            -             |
-| [Impulse](./c2-2-dynamics/momentum.md#impulse) |  $p$  |     $\mathrm{N\,s}$      | $\mathrm{kg\,m\,s^{-1}}$ |
+|    [Momentum](./c3-1-dynamics/momentum.md)     |  $p$  | $\mathrm{kg\,m\,s^{-1}}$ |            -             |
+| [Impulse](./c3-1-dynamics/momentum.md#impulse) |  $p$  |     $\mathrm{N\,s}$      | $\mathrm{kg\,m\,s^{-1}}$ |
 
 <!--
 |           Quantity           |   Sym.    |          Unit          |         Equivalent          |                  |

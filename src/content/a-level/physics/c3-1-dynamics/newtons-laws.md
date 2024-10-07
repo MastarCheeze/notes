@@ -2,7 +2,7 @@
 
 ## 1st Law
 
-> An object will remain at rest or move at constant velocity, unless acted upon by an **resultant external force**.
+> An object will remain at rest or move at constant velocity (linear equilibrium), unless acted upon by an **resultant external force**.
 
 If object is not moving, there is no resultant force
 

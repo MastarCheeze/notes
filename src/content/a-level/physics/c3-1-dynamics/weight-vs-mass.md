@@ -32,7 +32,3 @@ Definition: **Measure of inertia** (property that resists change in motion)
 > $$
 >
 > Unit of $g$ = $\mathrm{m\,s^{-2}}$
-
-## Centre of gravity
-
-**Single point** where the **whole weight** of the object is considered to act at
