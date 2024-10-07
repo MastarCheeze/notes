@@ -30,7 +30,7 @@ title: Scalar and Vector
 - Velocity
 - Acceleration
 - Momentum
-- Gravitational field strength
+- Gravitational acceleration
 - Electric field strength
 :::
 ::::
