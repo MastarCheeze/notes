@@ -6,10 +6,10 @@ title: Measuring Instruments
 
 ![Reading the scale on a vernier caliper](/src/assets/images/a-level/physics/vernier-caliper.png)
 
-::youtube[Some video]{vid=vkPlzmalvN4}
+::youtube{vid=vkPlzmalvN4}
 
 # Micrometer Screw Gauge
 
 ![Reading the scale on a micrometer screw gauge](/src/assets/images/a-level/physics/micrometer-screw-gauge.png)
 
-::youtube[Some video]{vid=StBc56ZifMs}
+::youtube{vid=StBc56ZifMs}
