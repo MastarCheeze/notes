@@ -1,5 +1,7 @@
 # Six Paradigms of Human Interaction
 
+> Mindsets
+
 ### Win/Lose
 
 "I win, you lose"
