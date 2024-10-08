@@ -14,19 +14,23 @@
 
 ## Derived quantities
 
-|                                               Quantity                                               |    Sym.    |                 SI Unit                  |        SI Base Unit        | Other Units |
-| :--------------------------------------------------------------------------------------------------: | :--------: | :--------------------------------------: | :------------------------: | :---------: |
-|                               [**2.1 Kinematics**](./c2-1-kinematics/)                               |            |                                          |                            |             |
-|                                            Speed/Velocity                                            |    $v$     |           $\mathrm{m\,s^{-1}}$           |             -              |      -      |
-|                                             Acceleration                                             |    $a$     |           $\mathrm{m\,s^{-2}}$           |             -              |      -      |
-|                                                &nbsp;                                                |            |                                          |                            |             |
-|                                 [**3.1 Dynamics**](./c3-1-dynamics/)                                 |            |                                          |                            |             |
-|                                                Force                                                 |    $F$     | <abbr title="Newton">$\mathrm{N}$</abbr> |  $\mathrm{kg\,m\,s^{-2}}$  |      -      |
-|                               [Momentum](./c3-1-dynamics/momentum.md)                                |    $p$     |         $\mathrm{kg\,m\,s^{-1}}$         |             -              |      -      |
-|                            [Impulse](./c3-1-dynamics/momentum.md#impulse)                            | $\Delta p$ |             $\mathrm{N\,s}$              |  $\mathrm{kg\,m\,s^{-1}}$  |      -      |
-|                                                &nbsp;                                                |            |                                          |                            |             |
-|                   [**4.1 Forces and Equilibrium**](./c4-1-forces-and-equilibrium/)                   |            |                                          |                            |             |
-| [Moment](./c4-1-forces-and-equilibrium/moment.md), [Torque](./c4-1-forces-and-equilibrium/torque.md) |    $M$     |             $\mathrm{N\,m}$              | $\mathrm{kg\,m^2\,s^{−2}}$ |      -      |
+|                                               Quantity                                               |    Sym.    |                  SI Unit                  |         SI Base Unit          | Other Units |
+| :--------------------------------------------------------------------------------------------------: | :--------: | :---------------------------------------: | :---------------------------: | :---------: |
+|                               [**2.1 Kinematics**](./c2-1-kinematics/)                               |            |                                           |                               |             |
+|                                            Speed/Velocity                                            |    $v$     |           $\mathrm{m\,s^{-1}}$            |               -               |      -      |
+|                                             Acceleration                                             |    $a$     |           $\mathrm{m\,s^{-2}}$            |               -               |      -      |
+|                                                &nbsp;                                                |            |                                           |                               |             |
+|                                 [**3.1 Dynamics**](./c3-1-dynamics/)                                 |            |                                           |                               |             |
+|                                                Force                                                 |    $F$     | <abbr title="Newton">$\mathrm{N}$</abbr>  |   $\mathrm{kg\,m\,s^{-2}}$    |      -      |
+|                               [Momentum](./c3-1-dynamics/momentum.md)                                |    $p$     |         $\mathrm{kg\,m\,s^{-1}}$          |               -               |      -      |
+|                            [Impulse](./c3-1-dynamics/momentum.md#impulse)                            | $\Delta p$ |              $\mathrm{N\,s}$              |   $\mathrm{kg\,m\,s^{-1}}$    |      -      |
+|                                                &nbsp;                                                |            |                                           |                               |             |
+|                   [**4.1 Forces and Equilibrium**](./c4-1-forces-and-equilibrium/)                   |            |                                           |                               |             |
+| [Moment](./c4-1-forces-and-equilibrium/moment.md), [Torque](./c4-1-forces-and-equilibrium/torque.md) |    $M$     |              $\mathrm{N\,m}$              |  $\mathrm{kg\,m^2\,s^{−2}}$   |      -      |
+|                                                &nbsp;                                                |            |                                           |                               |             |
+|                     [**4.2 Density and Pressure**](./c4-2-density-and-pressure/)                     |            |                                           |                               |             |
+|                          [Density](./c4-2-density-and-pressure/density.md)                           |   $/rho$   |           $\mathrm{kg\,m^{-3}}$           |               -               |      -      |
+|                         [Pressure](./c4-2-density-and-pressure/pressure.md)                          |    $p$     | <abbr title="Pascal">$\mathrm{Pa}$</abbr> | $\mathrm{kg\,m^{-1}\,s^{-2}}$ |      -      |
 
 <!--
 |          Quantity          |   Sym.    |          Unit          |         Equivalent          |                  |
