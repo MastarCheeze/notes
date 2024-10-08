@@ -29,7 +29,7 @@
 | [Moment](./c4-1-forces-and-equilibrium/moment.md), [Torque](./c4-1-forces-and-equilibrium/torque.md) |    $M$     |              $\mathrm{N\,m}$              |  $\mathrm{kg\,m^2\,s^{−2}}$   |      -      |
 |                                                &nbsp;                                                |            |                                           |                               |             |
 |                     [**4.2 Density and Pressure**](./c4-2-density-and-pressure/)                     |            |                                           |                               |             |
-|                          [Density](./c4-2-density-and-pressure/density.md)                           |   $/rho$   |           $\mathrm{kg\,m^{-3}}$           |               -               |      -      |
+|                          [Density](./c4-2-density-and-pressure/density.md)                           |   $\rho$   |           $\mathrm{kg\,m^{-3}}$           |               -               |      -      |
 |                         [Pressure](./c4-2-density-and-pressure/pressure.md)                          |    $p$     | <abbr title="Pascal">$\mathrm{Pa}$</abbr> | $\mathrm{kg\,m^{-1}\,s^{-2}}$ |      -      |
 
 <!--
