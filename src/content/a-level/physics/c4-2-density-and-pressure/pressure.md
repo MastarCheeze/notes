@@ -13,7 +13,7 @@
 
 Pressure in a fluid produces a perpendicular force onto any surface
 
-## Hydrostatic Pressure
+## Hydrostatic pressure
 
 Pressure in fluids
 

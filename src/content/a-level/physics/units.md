@@ -4,13 +4,13 @@
 
 |   Physical Quantity   |   Sym.   |                   SI Unit                   |
 | :-------------------: | :------: | :-----------------------------------------: |
-|         Mass          |   $m$    | <abbr title="Kilogram">$\mathrm{kg}$</abbr> |
-|        Length         |   $d$    |   <abbr title="Metre">$\mathrm{m}$</abbr>   |
-|         Time          |   $t$    |  <abbr title="Second">$\mathrm{s}$</abbr>   |
-|        Current        |   $I$    |  <abbr title="Ampere">$\mathrm{A}$</abbr>   |
-|      Temperature      | $\theta$ |  <abbr title="Kelvin">$\mathrm{K}$</abbr>   |
-| *Amount of substance* |   $n$    |  <abbr title="Mole">$\mathrm{mol}$</abbr>   |
-| *Luminous intensity*  |  $I_v$   | <abbr title="Candela">$\mathrm{cd}$</abbr>  |
+|         Mass          |   $m$    | <abbr title="kilogram">$\mathrm{kg}$</abbr> |
+|        Length         |   $d$    |   <abbr title="metre">$\mathrm{m}$</abbr>   |
+|         Time          |   $t$    |  <abbr title="second">$\mathrm{s}$</abbr>   |
+|        Current        |   $I$    |  <abbr title="ampere">$\mathrm{A}$</abbr>   |
+|      Temperature      | $\theta$ |  <abbr title="kelvin">$\mathrm{K}$</abbr>   |
+| *Amount of substance* |   $n$    |  <abbr title="mole">$\mathrm{mol}$</abbr>   |
+| *Luminous intensity*  |  $I_v$   | <abbr title="candela">$\mathrm{cd}$</abbr>  |
 
 ## Derived quantities
 
@@ -21,7 +21,7 @@
 |                                             Acceleration                                              |    $a$     |           $\mathrm{m\,s^{-2}}$            |               -               |                                               -                                                |
 |                                                &nbsp;                                                 |            |                                           |                               |                                                                                                |
 |                                 [**3.1 Dynamics**](./c3-1-dynamics/)                                  |            |                                           |                               |                                                                                                |
-|                                                 Force                                                 |    $F$     | <abbr title="Newton">$\mathrm{N}$</abbr>  |   $\mathrm{kg\,m\,s^{-2}}$    |                                               -                                                |
+|                                                 Force                                                 |    $F$     | <abbr title="newton">$\mathrm{N}$</abbr>  |   $\mathrm{kg\,m\,s^{-2}}$    |                                               -                                                |
 |                                [Momentum](./c3-1-dynamics/momentum.md)                                |    $p$     |         $\mathrm{kg\,m\,s^{-1}}$          |               -               |                                               -                                                |
 |                            [Impulse](./c3-1-dynamics/momentum.md#impulse)                             | $\Delta p$ |              $\mathrm{N\,s}$              |   $\mathrm{kg\,m\,s^{-1}}$    |                                               -                                                |
 |                                                &nbsp;                                                 |            |                                           |                               |                                                                                                |
@@ -30,7 +30,7 @@
 |                                                &nbsp;                                                 |            |                                           |                               |                                                                                                |
 |                     [**4.2 Density and Pressure**](./c4-2-density-and-pressure/)                      |            |                                           |                               |                                                                                                |
 |                           [Density](./c4-2-density-and-pressure/density.md)                           |   $\rho$   |           $\mathrm{kg\,m^{-3}}$           |               -               |                                               -                                                |
-|                          [Pressure](./c4-2-density-and-pressure/pressure.md)                          |    $p$     | <abbr title="Pascal">$\mathrm{Pa}$</abbr> | $\mathrm{kg\,m^{-1}\,s^{-2}}$ |                                               -                                                |
+|                          [Pressure](./c4-2-density-and-pressure/pressure.md)                          |    $p$     | <abbr title="pascal">$\mathrm{Pa}$</abbr> | $\mathrm{kg\,m^{-1}\,s^{-2}}$ |                                               -                                                |
 |                                                &nbsp;                                                 |            |                                           |                               |                                                                                                |
 |                    [**5.1 Work, Energy and Power**](./c5-1-work-energy-and-power/)                    |            |                                           |                               |                                                                                                |
 | [Energy](./c5-1-work-energy-and-power/energy.md), [Work](./c5-1-work-energy-and-power/energy.md#work) |  $E$, $W$  |  <abbr title="joule">$\mathrm{J}$</abbr>  |  $\mathrm{kg\,m^2\,s^{-2}}$   | <abbr title="kilowatt hour">$\mathrm{kWh}$</abbr>, <abbr title="calorie">$\mathrm{cal}$</abbr> |
