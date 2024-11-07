@@ -1,0 +1,30 @@
+compressive deformation - squashed and shortened (repulsive force between molecules)
+tensile deformation - stretched and lengthened (attractive force between molecules)
+
+extension - increase in length of spring
+
+Hooke's Law (measure of elasticity of object)
+F=kx
+extension against force applied graph, gradient is spring constant, area under graph is work done
+Extension produced is directly proportional to the force applied (within the limit of proportionality)
+spring constant / force constant k - large = stiff, small = elastic
+Limit of proportionality - beyond this point, extension is no longer proportional to force
+Elastic limit - beyond this point, spring is permanently deformed
+
+Elastic potential energy
+area under graph of extension against force = work done
+  E=1/2 Fx if obey hookes law (area under triangle)
+  E=1/2 kx * x
+  E=1/2 kx^2
+load/unload graph
+
+Elastic deformation - return to original length, all energy recovered
+Plastic deformation - does not return to original length, permanently deformed, some energy cannot be recovered
+
+Strain (epsilon) - extension / original length (ratio, no unit) - e/l (ratio of change in length)
+Stress (sigma) - normal force applied per unit cross sectional area (Pa, N m^-2) - F/A (force applied per unit area)
+Young modulus (E) - measure of elasticity of material - stress / strain (Pa, N m^-2, typically MPa or GPa) - Fl/eA
+
+when stress is proportional to strain, obeys Hooke's Law
+graph of stress-strain - area = elastic potential energy (strain energy) per unit volume, gradient = young modulus
+
