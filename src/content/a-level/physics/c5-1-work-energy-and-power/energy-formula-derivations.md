@@ -13,7 +13,13 @@ $$
 
 ## [Elastic potential energy](./energy.md#elastic-potential-energy)
 
-WIP <!-- TODO write derivation -->
+$$
+\text{Area under force-extension graph that obeys Hooke's Law} \\
+\begin{align*}
+  E_p &= \frac{1}{2} Fx \qquad \scriptsize F=kx \\
+  \therefore E_p &= \frac{1}{2} kx^2
+\end{align*}
+$$
 
 ## [Kinetic energy](./energy.md#kinetic-energy)
 
