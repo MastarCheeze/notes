@@ -1,6 +1,6 @@
 # Pressure
 
-> **Normal force** per unit area
+> **Normal force** per unit cross-sectional area
 >
 > $$
 > \begin{align*}
